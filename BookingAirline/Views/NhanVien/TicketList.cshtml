@@ -1,0 +1,59 @@
+﻿﻿@using BookingAirline.Models
+@{
+    ViewBag.Title = "TicketList";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    ViewBag.active7 = "active";
+}
+
+    
+    <h2>Ticket List</h2>
+
+    <br />
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            List ticket Air
+        </div>
+
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    @*//Phần render*@
+                    <tr>
+                        <th>Mã vé</th>
+                        <th>Mã chuyến bay</th>
+                        <th>Hạng vé</th>
+                        <th>Mã khách hàng</th>
+                        <th>Giá vé</th>
+                        <th>CCCD</th>
+                        <th>Tình trạng</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var dsticket = db.Ves.ToList();
+                        foreach (var item01 in dsticket)
+                        {
+                            <tr>
+                                <td>@item01.MaVe</td>
+                                <td>@item01.MaCB</td>
+                                <td>@item01.MaHV</td>
+                                <td>@item01.IDKH</td>
+                                @{ 
+                                    var total1 = string.Format("{0:0,0 vnđ}", item01.GiaVe);
+                                }
+                                <td>@total1</td>
+                                <td>@item01.CCCD</td>
+                                <td>@item01.TinhTrang</td>
+                                <td>Chỉnh sửa || Xóa</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+

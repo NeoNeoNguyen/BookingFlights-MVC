@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutContact.cshtml";
+}
+
+<link href="~/Style/Css/AboutUsStyle.css" rel="stylesheet" />
+
+<body class="body-about-us">
+    <section id="most-visited">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2 style="color:aliceblue">About Us</h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div id="owl-mostvisited" class="owl-carousel owl-theme">
+
+                        <div class="item col-md-12">
+                            <div class="visited-item">
+                                <img src="~/hinh/neo-img.jpg" alt="">
+                                <div class="text-content">
+                                    <h4>Neo Nguyen</h4>
+                                    <span>Developer</span>
+                                    <span>Mail: neoneonguyen@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item col-md-12">
+                            <div class="visited-item">
+                                <img src="~/hinh/135017829_1026004181228801_2637032699560275_n.jpg" />
+                                <div class="text-content">
+                                    <h4>Nha Truong</h4>
+                                    <span>Developer</span>
+                                    <span>Mail: nhatruong@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item col-md-12">
+                            <div class="visited-item">
+                                <img src="~/hinh/ka-img.jpg" alt="">
+                                <div class="text-content">
+                                    <h4>Kim Anh</h4>
+                                    <span>Developer</span>
+                                    <span>Mail: kimanh@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item col-md-12">
+                            <div class="visited-item">
+                                <img src="~/hinh/un-img.jpg" alt="">
+                                <div class="text-content">
+                                    <h4>Uyen Nhi</h4>
+                                    <span>Developer</span>
+                                    <span>Mail: uyennhi@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="~/Style/Js/jquery-1.11.2.min.js"><\/script>')</script>
+
+<script src="~/Style/Js/bootstrap.min.js"></script>
+
+<script src="~/Style/Js/datepicker.js"></script>
+<script src="~/Style/Js/plugins.js"></script>
+<script src="~/Style/Js/main.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // navigation click actions
+        $('.scroll-link').on('click', function (event) {
+            event.preventDefault();
+            var sectionID = $(this).attr("data-id");
+            scrollToID('#' + sectionID, 750);
+        });
+        // scroll to top action
+        $('.scroll-top').on('click', function (event) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+        // mobile nav toggle
+        $('#nav-toggle').on('click', function (event) {
+            event.preventDefault();
+            $('#main-nav').toggleClass("open");
+        });
+    });
+    // scroll function
+    function scrollToID(id, speed) {
+        var offSet = 0;
+        var targetOffset = $(id).offset().top - offSet;
+        var mainNav = $('#main-nav');
+        $('html,body').animate({ scrollTop: targetOffset }, speed);
+        if (mainNav.hasClass("open")) {
+            mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+            mainNav.removeClass("open");
+        }
+    }
+    if (typeof console === "undefined") {
+        console = {
+            log: function () { }
+        };
+    }
+</script>

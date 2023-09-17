@@ -1,0 +1,74 @@
+﻿﻿@model IEnumerable<BookingAirline.Models.ChiTietHD>
+@using BookingAirline.Models
+@{
+    ViewBag.Title = "DetailTotalRevenue";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    var stt = 0;
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    var total = 0;
+}
+
+
+<h2>Detail Total Revenue: @TempData["Mahd"] </h2>
+
+
+<div class="col-sm-2">
+    <a class="btn btn-success btn-sm print-file" title="In" onclick="myApp.printTable()">
+        <i class="fas fa-print"></i> In dữ liệu
+    </a>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Total Revenue
+    </div>
+    <div class="card-body table-responsive">
+        <table id="datatablesSimple">
+            <thead>
+                @*//Phần render*@
+                <tr>
+                    <th>STT</th>
+                    <th>Mã hóa đơn</th>
+                    <th>Mã vé</th>
+                    <th>Mã chuyến bay</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item01 in Model)
+                    {
+                        stt += 1;
+                        <tr>
+                            <td>@stt</td>
+                            <td>@item01.MaHD</td>
+                            <td>@item01.MaVe</td>
+                            <td>@item01.MaCB</td>
+                            <td>@item01.SoLuong</td>
+                            @{
+                                var donvi = string.Format("{0:0,0 vnđ}", item01.DonGia);
+                                total += (int)item01.DonGia;
+                            }
+                            <td>@donvi</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section script{
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('datatablesSimple');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+    </script>
+}

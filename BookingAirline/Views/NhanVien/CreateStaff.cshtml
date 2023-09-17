@@ -1,0 +1,123 @@
+﻿@model BookingAirline.Models.NhanVien
+@using BookingAirline.Models;
+@{ ViewBag.Title = "CreateStaff";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    var dscv = db.ChucVus.ToList();
+}
+
+<link href="~/Content/myInfor.css" rel="stylesheet" />
+<h2>DetailStaff</h2>
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Ảnh đại diện</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img id="myImg" class="img-account-profile rounded-circle mb-2" src="~/hinh/ka-img.jpg" alt="your image">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <div class="card mb-4">
+                <div class="card-header">Thông tin</div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm())
+                    {
+        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <span>ID:</span>
+                                    @Html.EditorFor(model => model.IDNV, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.IDNV, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-6">
+                                    <span>MaCV:</span>
+                                    <select class="form-control" style="height:45px" required name="MaCV">
+                                        <option selected disabled>Choose CV</option>
+                                        @{ 
+                                            foreach(var item in dscv)
+                {
+                                                <option value="@item.MaCV">@item.MaCV</option>
+                }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.MaCV, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <span>UserName:</span>
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-6">
+                                    <span>Password:</span>
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <span>FullName:</span>
+                                    @Html.EditorFor(model => model.TenNV, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TenNV, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-6">
+                                    <span>Sex:</span>
+                                    @Html.EditorFor(model => model.GioiTinh, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-6">
+                                    <span>Day of  Birth:</span>
+                                    @Html.TextBoxFor(m => Model.NgaySinh, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <span>Phone:</span>
+                                    @Html.EditorFor(model => model.SDT_NV, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SDT_NV, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-6">
+                                    <span>Email:</span>
+                                    @Html.EditorFor(model => model.Email_NV, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email_NV, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>}
+
+
+                </div>
+            </div>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Staff")
+        </div>
+    </div>
+</div>

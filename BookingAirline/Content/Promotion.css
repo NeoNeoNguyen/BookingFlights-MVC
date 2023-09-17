@@ -1,0 +1,126 @@
+﻿
+
+.center {
+    /*position: relative;*/
+    display: flex;
+    justify-content: center;
+   /* align-items: center;*/
+    border-radius: 10px;
+   
+}
+.form {
+   
+    border: 2px solid #000;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+    .center h1 {
+        font-size: 2em;
+        border-left: 5px solid dodgerblue;
+        padding: 10px;
+        color: #000;
+        letter-spacing: 5px;
+        margin-bottom: 60px;
+        font-weight: bold;
+        padding-left: 10px;
+    }
+
+    .center .inputbox {
+        position: relative;
+        width: 380px;
+        height: 45px;
+        margin-bottom: 50px;
+    }
+
+        .center .inputbox input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            border: 1px solid #808080;
+            outline: none;
+            background: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+
+        .center .inputbox:last-child {
+            margin-bottom: 0;
+        }
+
+        .center .inputbox span {
+            position: absolute;
+            top: 14px;
+            left: 20px;
+            font-size: 1em;
+            transition: 0.6s;
+        }
+
+        .center .inputbox input:focus ~ span,
+        .center .inputbox input:valid ~ span {
+            transform: translateX(-13px) translateY(-35px);
+            font-size: 1em;
+        }
+
+button {
+    width: 50%;
+    height: 60%;
+    background: dodgerblue;
+    color: #fff;
+    border: #fff;
+    border-radius: 5px;
+}
+.noidung{
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+body {
+   padding: 10px;
+   text-align: center;
+ }
+#slideshow {
+   overflow: hidden;
+   height: 510px;
+   width: 728px;
+   margin: 0 auto;
+ }
+.slide-wrapper {
+   width: 2912px;
+   -webkit-animation: slide 14s ease infinite;
+ }
+.slide {
+   float: left;
+   height: 510px;
+   width: 728px;
+ }
+@-webkit-keyframes slide {
+   20% {margin-left: 0px;}
+   30% {margin-left: -728px;}
+   50% {margin-left: -728px;}
+   60% {margin-left: -1456px;}
+   80% {margin-left: -1456px;}
+ }
+img{
+    width:700px;
+    height:500px;
+}
+.right{
+    width:40%;
+    float:right;
+}
+.left{
+    width:60%;
+    float:left
+}
+.banner-banner {
+    padding: 5px;
+    width: auto;
+}
+    .banner-banner img {
+        width: 500px;
+        height: 600px;
+    }

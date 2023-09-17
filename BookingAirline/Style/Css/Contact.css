@@ -1,0 +1,90 @@
+﻿body {
+    
+}
+
+.title {
+    font-style: normal;
+    text-align: center;
+    padding: 30px;
+}
+
+.table-form {
+    display: flex;
+}
+
+.left {
+    width: 60%;
+    height: 400px;
+}
+
+.right {
+    /*background-image: url('../../hinh/contact_backgroundun.png');*/
+    background-color:red;
+    width: 30%;
+    border-radius: 20px;
+    margin: 20px 10px 20px 10px;
+    padding: 10px;
+}
+
+.title2 {
+    font-size: large;
+    text-align: center;
+}
+
+.form-inline {
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.thongtin {
+    text-align: center;
+    font-size: x-large;
+    margin: 0px 5px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contentlh {
+    text-align: center;
+    line-height: 130%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10px;
+}
+
+    .contentlh a { /*uyennhi*/
+        text-decoration: none;
+        color: black;
+    }
+
+        .contentlh a:hover { /*uyennhi*/
+            color: white;
+        }
+
+.gui {
+    background-color: #04AA6D;
+    color: white;
+    padding: 7px 21px;
+    border: none;
+    cursor: pointer;
+    width: 100px
+}
+
+.huy {
+    background-color: red;
+    color: white;
+    padding: 7px 21px;
+    border: none;
+    cursor: pointer;
+    width: 100px
+}
+

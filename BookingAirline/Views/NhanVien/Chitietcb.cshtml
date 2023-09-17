@@ -1,0 +1,171 @@
+﻿@model BookingAirline.Models.ChuyenBay
+@using BookingAirline.Models;
+
+@{
+    ViewBag.Title = "Chitietcb";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    var today = DateTime.Now;
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    var ctcb = db.ChiTietChuyenBays.Where(s => s.MaCTCB == Model.MaCB).FirstOrDefault();
+}
+<br />
+<h2 style="text-align:center">Detaile flight @Model.MaCB</h2>
+<br />
+<div class="container">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/hinh/HinhNen/8d80128d9cb6ca236f7e4b7babdc98ed.jpg" height="500" width="350" />
+            </div>
+
+            <div class="col-md-6">
+                <div class="row" id="themdong">
+                    <div class="col-md-12">
+                        <div style="font-size:15px">----Flight Infomation----</div>
+                    </div>
+                    <div class="col-md-5" id="ThongtinMB">
+                        <label class="control-label" style="font-weight:bold">Airplane code: </label>
+                        @Html.DisplayFor(model => model.MaMB)
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label" style="font-weight:bold">Route code</label>
+                        @Html.DisplayFor(model => model.MaTBay)
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label class="control-label" style="font-weight:bold">Time: </label>
+                        @Html.DisplayFor(model => model.NgayGio)
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" style="font-weight:bold">Flight time: </label>
+                        @Html.DisplayFor(model => model.ThoiGianBay)
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" style="font-weight:bold">Status: </label>
+                        @Html.DisplayFor(model => model.TinhTrang)
+                    </div>
+                    <div class="col-md-12">
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" style="font-weight:bold">Number of seats G1:</label>
+                        @Html.DisplayFor(model => model.SoLuongGheHang1)
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" style="font-weight:bold">Number of seats G2:</label>
+                        @Html.DisplayFor(model => model.SoLuongGheHang2)
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" style="font-weight:bold">Number of seats G3:</label>
+                        @Html.DisplayFor(model => model.SoLuongGheHang3)
+                    </div>
+                    <div class="col-md-12">
+
+                    </div>
+                    @{
+                        if (ctcb != null)
+                        {
+                            <div class="form-group col-md-5">
+                                <label class="control-label" style="font-weight:bold">Intermediate airport:</label>
+                                @ctcb.SanBayTrungGian
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label" style="font-weight:bold">
+                                    Stopover time:
+                                </label>
+                                @ctcb.ThoiGianDung
+
+
+
+                            </div>
+                            <div class="col-md-12">
+
+                            </div>
+                            <div class="form-group col-md-9">
+                                <label class="control-label" style="font-weight:bold">Notes:</label>
+                                @ctcb.GhiChu
+
+                            </div>
+                        }
+                    }
+
+                    <div class="col-md-8">
+                        <p>
+
+                            @{
+                                TimeSpan han = (DateTime)Model.NgayGio - today;
+                                if (han.Days >= 0 && han.TotalHours >= 2)
+                                {
+                                    @Html.ActionLink("Edit", "DetailFlight", new { id = Model.MaCB }, new { @class = "btn btn-primary" })
+                                }
+                                else if (han.Days < 0)
+                                {
+                                    <button class="btn btn-primary" disabled>Edit</button>
+                                    <h2 style="color:red">Unconditional !</h2>
+                                    <h3 style="color:red">Overdue</h3>
+                                };
+                            }
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4" style="text-align:center">
+                <br />
+                @Html.ActionLink("Back to List", "Scheduleaflight", null, new { @class = "btn btn-danger" })
+            </div>
+
+            <hr />
+            <div class="col-lg-12">
+                <h2>List of customers joining the flight @Model.MaCB</h2>
+                <table id="datatablesSimple" class="display stripe hover order-column row-border">
+                    <thead>
+                        @*//Phần render*@
+                        <tr>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb ">Reservation code</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb ">Customer's code</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Cetizen ID</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">customer's full name</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Booking date</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Seating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var ds = db.PhieuDatChoes.Where(s=>s.MaCB==Model.MaCB);
+                            foreach (var item01 in ds)
+                            {
+                                <tr>
+                                    <td style="text-align:center">@item01.MaPhieu</td>
+                                    <td style="text-align:center">@item01.IDKH</td>
+                                    <td style="text-align:center">@item01.CCCD</td>
+                                    @{ var tenkh = db.KhachHangs.Where(s => s.IDKH == item01.IDKH).FirstOrDefault();
+                                    }
+                                            <td style="text-align:center">@tenkh.TenKH</td>
+
+                                    <td style="text-align:center">@item01.NgayDat</td>
+                                    <td style="text-align:center">@item01.SoGhe</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section script{
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('datatablesSimple');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+    </script>
+}

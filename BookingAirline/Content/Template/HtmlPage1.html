@@ -1,0 +1,220 @@
+﻿﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Thông tin đơn hàng mới từ khách hàng  {{CustomerName}}</title>
+
+</head>
+<body>
+    <p>Thông tin đơn hàng mới từ khách hàng: <h1>{{CustomerName}}</h1></p>
+    <p>Điện thoại: {{Phone}}</p>
+    <p>Emaili: {{Email}}</p>
+    <p>Trị giá:  {{Total}}</p>
+    <p style="text-align:center">Ngày giờ giao dịch {{Thoigian}}</p>
+    <table width="800" align="center">
+        <tbody>
+            <tr>
+                <td style="background:#fff;margin:0px auto;border:solid 1px #ccc;padding:10px">
+                    <table style="width:100%;vertical-align:top">
+                        <tbody>
+                            <tr>
+                                <td style="padding-top:20px;padding-bottom:17px;font:bold 27px arial;color:#00aa13;text-align:center">
+                                    <div style="text-align:center">
+                                        <span class="il">HÓA</span> <span class="il">ĐƠN</span> ĐIỆN TỬ/ <i>ELECTRONIC INVOICE</i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>Kính gửi Quý Khách hàng/ <i>Dear Valued Customer</i>:</b>
+                                    <span>
+                                        <b>{{CustomerName}}</b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        Cảm ơn quý khách hàng đã sử dụng dịch vụ booking ticket của Air Flight, mã <span class="il">đơn</span> hàng: VN-{{Invoice}}
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <i>Thank you for using our Air FLight service, order number</i>:VN-{{Invoice}} .
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        CHÚNG TÔI XIN GỬI ĐẾN QUÝ KHÁCH <span class="il">HÓA</span> <span class="il">ĐƠN</span> GIÁ TRỊ GIA TĂNG ĐIỆN TỬ CỦA MÃ <span class="il">ĐƠN</span> HÀNG TRÊN /
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font:12px/15px arial;text-align:left;vertical-align:text-top;font-style:italic">
+                                    <b>
+                                        WE WOULD LIKE TO SEND YOU THE ELECTRONIC VALUE-ADDED TAX INVOICE FOR THE ABOVE ORDER:
+                                    </b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width:100%" border="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td style="font:bold 12px arial;vertical-align:top;width:180px;padding-right:10px;padding-left:20px;padding-bottom:8px;padding-top:8px;text-align:left">Mẫu số/ <i>Form</i>:</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td style="font:bold 12px arial;vertical-align:top;width:180px;padding-right:10px;padding-left:20px;padding-bottom:8px;padding-top:8px;text-align:left">Ký hiệu/ <i>Serial no</i>:</td>
+                                <td>C23TGC</td>
+                            </tr>
+                            <tr>
+                                <td style="font:bold 12px arial;vertical-align:top;width:180px;padding-right:10px;padding-left:20px;padding-bottom:8px;padding-top:8px;text-align:left">Số <span class="il">hóa</span> <span class="il">đơn</span>/ <i>Invoice no</i>:</td>
+                                <td style="font:bold 12px/20px arial;vertical-align:top;color:#ff0000;padding-left:10px;padding-bottom:8px;padding-top:8px">{{Invoice}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font:bold 12px arial;vertical-align:top;width:180px;padding-right:10px;padding-left:20px;padding-bottom:8px;padding-top:8px;text-align:left">Ngày <span class="il">hóa</span> <span class="il">đơn</span>/ <i>Invoice date</i>:</td>
+                                <td style="font:12px/20px arial;vertical-align:top;padding-left:10px;padding-bottom:8px;padding-top:8px">
+                                    <b>{{Thoigian}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font:bold 12px arial;vertical-align:top;width:180px;padding-right:10px;padding-left:20px;padding-bottom:8px;padding-top:8px;text-align:left">
+                                    Tổng số tiền đã thanh toán/<br>
+                                    <i>Total paid amount</i>:
+                                </td>
+                                <td style="font: bold 12px arial; vertical-align: top; background: #1f3646; padding-left: 10px; padding-bottom: 8px; padding-top: 8px; color: #fff; height: 50px">{{Total}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    Mã nhận <span class="il">hóa</span> <span class="il">đơn</span>/ <i>Invoice code</i>: 5C8A1NB5R<br>Tra cứu tại/ <i>To check at</i>:
+                                    <a href="https://tracuuhoadon.AirFlight.com.vn" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://tracuuhoadon.AirFlight.com.vn&amp;source=gmail&amp;ust=1681443362238000&amp;usg=AOvVaw2oqEFZIeepdtXoO7CxBlK1">https://tracuuhoadon.AirFlight.<wbr>com.vn</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div style="color:#ff0000;padding-top:15px;display:block;text-align:left;font-weight:bold;font-size:14px">Ghi chú/ <i>Note</i>:</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width:100%" border="0" cellspacing="0">
+                        <tbody>
+                            <tr style="color:#ff0000">
+                                <td style="font:bold 12px arial;vertical-align:top;width:50px;text-align:center;padding-top:12px">1.</td>
+                                <td style="font:12px/20px arial;vertical-align:top;color:#ff0000;padding-top:8px">
+                                    <b>
+                                        Kể từ ngày 01/07/2022, theo quy định tại Khoản 1, Điều 4, Nghị định 123/2020/NĐ-CP ngày 19/10/2020 và
+
+                                        <a href="https://thuvienphapluat.vn/van-ban/Thue-Phi-Le-Phi/Thong-tu-78-2021-TT-BTC-huong-dan-Luat-Quan-ly-thue-Nghi-dinh-123-2020-ND-CP-hoa-don-chung-tu-477966.aspx" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://thuvienphapluat.vn/van-ban/Thue-Phi-Le-Phi/Thong-tu-78-2021-TT-BTC-huong-dan-Luat-Quan-ly-thue-Nghi-dinh-123-2020-ND-CP-hoa-don-chung-tu-477966.aspx&amp;source=gmail&amp;ust=1681443362239000&amp;usg=AOvVaw2eZNL6jHxh50j3bVonz7HH">Thông tư 78/2021/TT-BTC&nbsp;</a>
+                                        ngày 17/09/2021, ngoài "Biên lai dịch vụ", Air Flight sẽ phát hành thêm “<span class="il">Hóa</span> <span class="il">đơn</span> Điện tử”
+                                        (<span class="il">Hóa</span> <span class="il">đơn</span> Giá trị Gia tăng) cho cước dịch vụ của các <span class="il">đơn</span> hàng mà Quý khách đã hoàn tất và đã thanh toán với Air Flight.
+                                    </b>
+                                    <br>
+                                    <i>
+                                        From July 1, 2022, in addition to a "Air Flight Receipt", Air Flight will send you an “Electronic Invoice” (Value-Added Tax Invoice)
+                                        for each completed and paid order, in accordance with Clause 1, Article 4 of the Decree 123/2020/ND-CP dated 19 October 2020 and
+                                        Circular 78/2021/TT-BTC dated 17 September 2021.
+                                    </i>
+                                </td>
+                            </tr>
+                            <tr style="color:#ff0000">
+                                <td style="font:bold 12px arial;vertical-align:top;width:50px;text-align:center;padding-top:12px">2.</td>
+                                <td style="font:12px/20px arial;vertical-align:top;color:#ff0000;padding-top:8px">
+                                    <b>
+                                        Số tiền trên “<span class="il">Hóa</span> <span class="il">đơn</span> Điện tử” là giá trị của phần dịch vụ do Air Flight cung cấp.
+                                        Vì vậy, số tiền trên <span class="il">Hóa</span> <span class="il">đơn</span> Điện tử này có thể không giống với số tiền trên “Biên lai dịch vụ” của Air Flight.
+                                        Số tiền trên <span class="il">Hoá</span> <span class="il">đơn</span> Điện tử không bao gồm phần giảm giá của Air Flight theo mã giảm giá,
+                                        các khoản chi hộ bởi Tài xế (Với phí cầu đường, phí giữ xe, phí sân bay, v.v. - trách nhiệm xuất <span class="il">hóa</span> <span class="il">đơn</span> thuộc về <span class="il">đơn</span> vị cung cấp các dịch vụ này).
+                                        Đối với <span class="il">đơn</span> hàng Air Ticket, “<span class="il">Hoá</span> <span class="il">đơn</span> Điện tử" sẽ không bao gồm tổng số tiền vé ăn đã trả cho đại lý phân phối
+                                        (trách nhiệm xuất <span class="il">hóa</span> <span class="il">đơn</span> cho tổng số tiền vé đã trả cho đại lý phân phối thuộc về đối tác nhà hàng).
+                                    </b>
+                                    <br>
+                                    <i>
+                                        The amount on this “Electronic Invoice” is the price of the service provided by Booking Airline,
+                                        hence the amount shown here may differ from the amount on the “Booking Airline, Receipt”.
+                                        The amount on the Electronic Invoice does not include Booking Airline, vouchers,
+                                        fees paid by Drivers to other service providers such as toll fee, parking fee, airport fee, etc.
+                                        - for which invoice issuance is the responsibility of the corresponding third-party service providers.
+                                        For GoFood orders, the amount on the Electronic Invoice does not cover the food price paid to the merchants,
+                                        for which invoice issuance is the responsibility of the corresponding merchants.
+                                    </i>
+                                </td>
+                            </tr>
+                            <tr style="color:#ff0000">
+                                <td style="font:bold 12px arial;vertical-align:top;width:50px;text-align:center;padding-top:12px">3.</td>
+                                <td style="font:12px/20px arial;vertical-align:top;color:#ff0000;padding-top:8px">
+                                    <b>
+                                        “<span class="il">Hóa</span> <span class="il">đơn</span> Điện tử” này không thay thế “Biên lai dịch vụ”.
+                                        Quý khách có thể kiểm tra thông tin <span class="il">đơn</span> hàng và tải “Biên lai dịch vụ” trực tiếp tại mục “<span class="il">Đơn</span> hàng” trên ứng dụng Air Flight.
+                                    </b>
+                                    <br>
+                                    <i>
+                                        This “Electronic Invoice” does not replace “Air Flight Receipt”.
+                                        You can check the order’s details and download “Air Flight Receipt” directly in the “Orders” section in the Air Flight app.
+                                    </i>
+                                </td>
+                            </tr>
+                            <tr style="color:#ff0000">
+                                <td style="font:bold 12px arial;vertical-align:top;width:50px;text-align:center;padding-top:12px">4.</td>
+                                <td style="font:12px/20px arial;vertical-align:top;color:#ff0000;padding-top:8px">
+                                    <b>
+                                        Nếu cần hỗ trợ về nội dung <span class="il">Hóa</span> <span class="il">đơn</span> Điện tử này,
+                                        Quý khách vui lòng liên hệ tổng đài Air Flight thông qua mục “Hỗ trợ” trên ứng dụng Air Flight.
+                                    </b>
+                                    <br>
+                                    <i>Should you need any further support, please contact Air Flight via the “Help” section in the Air Flight app. </i>
+                                </td>
+                            </tr>
+                            <tr style="color:#ff0000">
+                                <td style="font:bold 12px arial;vertical-align:top;width:50px;text-align:center;padding-top:12px">5.</td>
+                                <td style="font:12px/20px arial;vertical-align:top;color:#ff0000;padding-top:8px">
+                                    <b>Đây là email tự động. Quý khách vui lòng không trả lời email này.</b>
+                                    <br>
+                                    <i>This is an automated email. Please do not reply to this email.</i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td style="color:#000;padding-top:15px;display:block;text-align:left;font-weight:bold;font-size:14px">
+                                    Trân trọng/ <i>Regards</i>
+                                    <br>
+                                    <i>	Air Flight Việt Nam	</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    CÔNG TY TNHH CÔNG NGHỆ AIR FLIGHT
+                                </td>
+                            </tr>
+                            <tr style="background: #1f3646">
+                                <td>
+                                    <span style="color:white"> Trụ sở chính: Tầng 19, Khu Văn Phòng Toà nhà Pearl Plaza, 561A Đường Điện Biên Phủ, Phường 25, Quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam./ </span>
+                                    <i>19th floor, Office Area, Pearl Plaza tower, 561A Dien Bien Phu Street, Ward 25, Binh Thanh District, Ho Chi Minh City, Vietnam</i>
+                                    <br>
+                                    <span style="color:white">
+                                        Website: <a href="http://www.AirFlight.com" style="color:white" target="_blank" data-saferedirecturl="https://www.google.com/url?q=http://www.Air Flight.com&amp;source=gmail&amp;ust=1681443362239000&amp;usg=AOvVaw1w3XeF1x5aBiYDfXV3sRq2">www.Air Flight.com</a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

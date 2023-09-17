@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Style/Css/Admin/footerStyle.css" rel="stylesheet" />
+    <link href="~/Style/Css/Admin/trangchu.css" rel="stylesheet" />
+    <link rel="apple-touch-icon" href="~/Style/apple-touch-icon.html">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/Style/Css/fontAwesome.css">
+    <link rel="stylesheet" href="~/Style/Css/hero-slider.css">
+    <link rel="stylesheet" href="~/Style/Css/owl-carousel.css">
+    <link rel="stylesheet" href="~/Style/Css/datepicker.css">
+    <link rel="stylesheet" href="~/Style/Css/tooplate-style.css">
+    <link rel="Shortcut Icon" href="~/hinh/logo-i.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Style/Css/myStyle.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <script src="~/Style/Js/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <style>
+        .avatar {
+            width: 50px; /* Điều chỉnh kích thước avatar tùy ý */
+            height: 50px;
+            border-radius: 50%; /* Đây là thuộc tính tạo góc bo tròn */
+            overflow: hidden; /* Loại bỏ phần dư của hình ảnh vượt ra khỏi vùng giới hạn */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="opacity:80%;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Home","Home",new {area = ""}, new {@class = "navbar-brand"})*@
+            </div>
+            <div class="navbar-collapse collapse" style="font-size:16px;">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "TrangChu", "KhachHangHA")</li>
+                    <li>@Html.ActionLink("About", "About", "KhachHangHA")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "KhachHangHA")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @{var user = (BookingAirline.Models.KhachHang)HttpContext.Current.Session["userKH"]; }
+
+                    <li>
+                        <div class="avatar">
+                            <img src="@user.HinhAnh" alt="Avatar">
+                        </div>
+                        
+                    </li>
+                    <li>
+                        <a href="~/KhachHangHA/ThongTinKH">
+
+                            @user.UserName
+                        </a>
+                    </li>
+                    <li><a href="@Url.Action("LogOut","LoginUser")">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="banner" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="left-side">
+                        @*<div class="logo">
+                                <img src="~/hinh/logo.png" alt="Flight Template">
+                            </div>*@
+                        <div class="tabs-content">
+                            <h4>Choose Your Direction:</h4>
+                            <ul class="social-links">
+                                <li><a href="#">Find us on <em>Facebook</em><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#">Our <em>YouTube</em> Channel<i class="fa fa-youtube"></i></a></li>
+                                <li><a href="#">Follow our <em>instagram</em><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="~/Home/Contact">Contact our <em>Infomations</em><i class="fa fa-phone"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-md-offset-1">
+                    <section id="first-tab-group" class="tabgroup">
+                        <div id="tab1">
+                            <div class="submit-form">
+                                <h4>Check availability for <em>direction</em>:</h4>
+                                <form id="form-submit" action="~/KhachHangHA/DSachCB" method="get">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <label for="from">From:</label>
+                                                <select required name='from' id="from">
+                                                    <option selected disabled>Select a location...</option>
+                                                    <option value="SGN">Hồ Chí Minh (SGN)</option>
+                                                    <option value="HAN">Hà Nội (HAN)</option>
+                                                    <option value="DAD">Đà Nẵng (DAD)</option>
+                                                    <option value="HPH">Hải Phòng (HPH)</option>
+                                                    <option value="VCA">Cần Thơ (VCA)</option>
+                                                    <option value="VII">Vinh (VII)</option>
+                                                    <option value="HUI">Huế (HUI)</option>
+                                                    <option value="DLI">Đà Lạt (DLI)</option>
+                                                    <option value="PXU">Pleiku (PXU)</option>
+                                                    <option value="VDH">Đồng Hới (VDH)</option>
+                                                    <option value="THD">Thanh Hóa (THD)</option>
+                                                    <option value="UIH">Qui Nhơn (UIH)</option>
+                                                    <option value="TBB">Tuy Hòa (TBB)</option>
+                                                    <option value="VCL">Chu Lai (VCL)</option>
+                                                    <option value="BMV">Ban Mê Thuột (BMV)</option>
+                                                    <option value="VCS">Côn Đảo (VCS)</option>
+                                                    <option value="VKG">Rạch Giá (VKG)</option>
+                                                    <option value="PQC">Phú Quốc (PQC)</option>
+                                                    <option value="VDO">Vân Đồn (VDO)</option>
+                                                    <option value="VCA">Cà Mau (VCA)</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <label for="to">To:</label>
+                                                <select required name='to' id="to">
+                                                    <option selected disabled>Select a location...</option>
+                                                    <option value="SGN">Hồ Chí Minh (SGN)</option>
+                                                    <option value="HAN">Hà Nội (HAN)</option>
+                                                    <option value="DAD">Đà Nẵng (DAD)</option>
+                                                    <option value="HPH">Hải Phòng (HPH)</option>
+                                                    <option value="VCA">Cần Thơ (VCA)</option>
+                                                    <option value="VII">Vinh (VII)</option>
+                                                    <option value="HUI">Huế (HUI)</option>
+                                                    <option value="DLI">Đà Lạt (DLI)</option>
+                                                    <option value="PXU">Pleiku (PXU)</option>
+                                                    <option value="VDH">Đồng Hới (VDH)</option>
+                                                    <option value="THD">Thanh Hóa (THD)</option>
+                                                    <option value="UIH">Qui Nhơn (UIH)</option>
+                                                    <option value="TBB">Tuy Hòa (TBB)</option>
+                                                    <option value="VCL">Chu Lai (VCL)</option>
+                                                    <option value="BMV">Ban Mê Thuột (BMV)</option>
+                                                    <option value="VCS">Côn Đảo (VCS)</option>
+                                                    <option value="VKG">Rạch Giá (VKG)</option>
+                                                    <option value="PQC">Phú Quốc (PQC)</option>
+                                                    <option value="VDO">Vân Đồn (VDO)</option>
+                                                    <option value="VCA">Cà Mau (VCA)</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <label for="departure">Departure date:</label>
+                                                <input name="deparure" type="date" class="form-control date01" min=@DateTime.Now.ToString("yyyy-MM-dd") id="deparure" placeholder="Select date..." required>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <label for="return">Return date:</label>
+                                                <input name="return" type="date" disabled class="form-control date01" min=@DateTime.Now.ToString("yyyy-MM-dd") id="return" placeholder="Select date..." required>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <label>Quantity aldults:</label>
+                                                <input class="form-control date01" type="number" min="1" required name="aldults" />
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <label>Quantity children:</label>
+                                                <input class="form-control date01" type="number" min="0" required name="children" />
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6 mt-5">
+                                            <div class="radio-select">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                                        <label for="round">Round</label>
+                                                        <input type="radio" name="trip" id="round" value="round" required="required">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                                        <label for="oneway">Oneway</label>
+                                                        <input type="radio" name="trip" id="oneway" value="one-way" required="required">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <fieldset>
+                                                <button type="submit" id="form-submit" class="btn">Order Ticket Now</button>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    @RenderBody()
+    <!-- Start of LiveChat (www.livechat.com) code -->
+    <script>
+        window.__lc = window.__lc || {};
+        window.__lc.license = 15472062;
+        ; (function (n, t, c) { function i(n) { return e._h ? e._h.apply(null, n) : e._q.push(n) } var e = { _q: [], _h: null, _v: "2.0", on: function () { i(["on", c.call(arguments)]) }, once: function () { i(["once", c.call(arguments)]) }, off: function () { i(["off", c.call(arguments)]) }, get: function () { if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load."); return i(["get", c.call(arguments)]) }, call: function () { i(["call", c.call(arguments)]) }, init: function () { var n = t.createElement("script"); n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n) } }; !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e }(window, document, [].slice))
+    </script>
+    <noscript><a href="https://www.livechat.com/chat-with/15472062/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+    <!-- End of LiveChat code -->
+    <br />
+
+    <br />
+    <br />
+
+</body>
+
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="~/Style/Js/jquery-1.11.2.min.js"><\/script>')</script>
+
+<script src="~/Style/Js/bootstrap.min.js"></script>
+
+<script src="~/Style/Js/datepicker.js"></script>
+<script src="~/Style/Js/plugins.js"></script>
+<script src="~/Style/Js/main.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // navigation click actions
+        $('.scroll-link').on('click', function (event) {
+            event.preventDefault();
+            var sectionID = $(this).attr("data-id");
+            scrollToID('#' + sectionID, 750);
+        });
+        // scroll to top action
+        $('.scroll-top').on('click', function (event) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+        // mobile nav toggle
+        $('#nav-toggle').on('click', function (event) {
+            event.preventDefault();
+            $('#main-nav').toggleClass("open");
+        });
+    });
+    // scroll function
+    function scrollToID(id, speed) {
+        var offSet = 0;
+        var targetOffset = $(id).offset().top - offSet;
+        var mainNav = $('#main-nav');
+        $('html,body').animate({ scrollTop: targetOffset }, speed);
+        if (mainNav.hasClass("open")) {
+            mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+            mainNav.removeClass("open");
+        }
+    }
+    if (typeof console === "undefined") {
+        console = {
+            log: function () { }
+        };
+    }
+
+</script>
+<script>
+    function readURL(input, thumbimage) {
+        if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#thumbimage").attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        else { // Sử dụng cho IE
+            $("#thumbimage").attr('src', input.value);
+
+        }
+        $("#thumbimage").show();
+        $('.filename').text($("#uploadfile").val());
+        $('.Choicefile').css('background', '#14142B');
+        $('.Choicefile').css('cursor', 'default');
+        $(".removeimg").show();
+        $(".Choicefile").unbind('click');
+
+    }
+    $(document).ready(function () {
+        $(".Choicefile").bind('click', function () {
+            $("#uploadfile").click();
+
+        });
+        $(".removeimg").click(function () {
+            $("#thumbimage").attr('src', '').hide();
+            $("#myfileupload").html('<input type="file" id="uploadfile"  onchange="readURL(this);" />');
+            $(".removeimg").hide();
+            $(".Choicefile").bind('click', function () {
+                $("#uploadfile").click();
+            });
+            $('.Choicefile').css('background', '#14142B');
+            $('.Choicefile').css('cursor', 'pointer');
+            $(".filename").text("");
+        });
+    })
+
+</script>
+<script>
+    $(document).ready(function () {
+        // Lưu trữ tất cả các option trong dropdown điểm đến (To)
+        var allOptions = $('#to option').clone();
+        
+        // Xử lý sự kiện khi dropdown điểm đi (From) thay đổi
+        $('#from').change(function () {
+            var selectedOption = $(this).val(); // Lấy giá trị đã chọn trong dropdown điểm đi (From)
+            // Khôi phục tất cả các option trong dropdown điểm đến (To)
+            $('#to').empty().append(allOptions);
+
+            // Loại bỏ option đã chọn từ dropdown điểm đến (To)
+            $('#to option[value="' + selectedOption + '"]').remove();
+
+            // Hiển thị lại nội dung đã ẩn trước đó (nếu có)
+            $('#to').removeAttr('disabled');
+        });
+
+        // Xử lý sự kiện khi dropdown điểm đến (To) thay đổi
+        $('#to').change(function () {
+            var selectedOption = $(this).val(); // Lấy giá trị đã chọn trong dropdown điểm đến (To)
+
+            // Nếu người dùng chọn lại "Select a location..."
+            if (selectedOption === "") {
+                // Hiển thị lại tất cả các option trong dropdown điểm đến (To)
+                $('#to').empty().append(allOptions);
+            }
+        });
+    });
+</script>
+@*<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>*@
+
+

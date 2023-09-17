@@ -1,0 +1,51 @@
+﻿﻿@using BookingAirline.Models
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    ViewBag.active9 = "active";
+}
+
+
+<h2>History</h2>
+
+<br />
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        History Schedule Flight
+    </div>
+
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                @*//Phần render*@
+                <tr>
+                    <th>Thời gian</th>
+                    <th>Thao tác</th>
+                    <th>Mã chuyến bay</th>
+                    <th>Mã máy bay</th>
+                    <th>Mã Tuyến bay</th>
+                    <th>Ngày giờ</th>
+                    <th>Thời gian bay</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var histo = db.save_log_chuyenbay.ToList();
+                    foreach (var item01 in histo)
+                    {
+                                <tr>
+                                    <td>@item01.Malog</td>
+                                    <td>@item01.ThaoTac</td>
+                                    <td>@item01.MaCB</td>
+                                    <td>@item01.MaMB</td>
+                                    <td>@item01.MaTBay</td>
+                                    <td>@item01.NgayGio</td>
+                                    <td>@item01.ThoiGianBay</td>
+                                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

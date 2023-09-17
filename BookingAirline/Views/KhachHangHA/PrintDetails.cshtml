@@ -1,0 +1,96 @@
+﻿
+@using BookingAirline.Models
+@{ ViewBag.Title = "ThankYou";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutContact.cshtml";
+    var thongbao = TempData["Message"];
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    var ttkh = (Order)Session["contacKH"];
+    Cart cart = Session["Cart"] as Cart; }
+<!-- Google Fonts -->
+@*<link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i%7CPlayfair+Display:400,400i,700,700i,900,900i" rel="stylesheet">*@
+<link href="~/Content/CSS_01/style.css" rel="stylesheet" />
+<link href="~/Content/CSS_01/orange.css" rel="stylesheet" />
+<link href="~/Style/Css/thankyou.css" rel="stylesheet" />
+<section class="innerpage-wrapper">
+    <div id="thank-you" class="innerpage-section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 content-side">
+                    <div class="space-right">
+                        <div class="traveler-info">
+                            <h3 class="t-info-heading"><span><i class="fa fa-info-circle"></i></span>Traveler Information</h3>
+
+                            <div class="feedback" id="oldX"></div><div class="feedback" id="oldY"></div>
+
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                @{ var stt = 0;}
+                                @foreach (var item in cart.Items)
+                                {
+                    <div id="ticket" class="col-10">
+                        <div class="row perforated first">
+
+                            <img class="logo" src="~/Content/images/logo.jpg" />
+                            <div class="right">
+                                <div class="label">Flight Number</div>
+                                <h2 class="num" style="padding-right: 10px">@item.idVe.MaCB</h2>
+                            </div>
+                        </div>
+                        <div class="row perforated destinations">
+                            <div class="left">
+                                <div class="label">Departing</div>
+                                @{ var cb = db.ChuyenBays.Where(s => s.MaCB == item.idVe.MaCB).FirstOrDefault();
+                                                    var matbay = db.TuyenBays.Where(s => s.MaTBay == cb.MaTBay).FirstOrDefault(); }
+                                <div class="city">Departing: @matbay.SanBayDi</div>
+                            </div>
+                            <svg id="plane" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" enable-background="new 0 0 100 100" xml:space="preserve">
+                            <g>
+                            <path d="M12.5,50L6.25,31.25h6.25L25,43.75h25L31.25,6.25h6.25l31.25,37.5h12.5c0,0,12.5,0,12.5,6.25s-12.5,6.25-12.5,6.25h-12.5   L37.5,93.75h-6.25L50,56.25H25l-12.5,12.5H6.25L12.5,50z" /> 
+                                                </g> 
+                                                </svg>
+
+                            <div class="right">
+                                <div class="label">Arriving</div>
+                                <div class="city">Arriving: @matbay.SanBayDen</div>
+                            </div>
+                        </div>
+                        <div class="row normRow">
+                            <div>
+                                <div class="label">Passenger</div>
+                                @{ var kh = db.KhachHangs.Where(s => s.CCCD == item.CCCD).FirstOrDefault(); }
+                                <div class="city">Name: @kh.TenKH</div>
+                                <div class="city">CCCD: @item.CCCD</div>
+                            </div>
+
+                        </div>
+                        <div class="row normRow">
+                            <div class="col6">
+                                <div class="label">Ticket ID</div>
+                                <div class="city">Ticket ID: @item.idVe.MaVe</div>
+                            </div>
+                        </div>
+                        <div class="row normRow">
+
+                            <div class="col6">
+                                <div class="city">Departs at</div>
+                                @{ var cb1 = db.ChuyenBays.Where(s => s.MaCB == item.idVe.MaCB).FirstOrDefault(); }
+                                <div class="city">@cb1.NgayGio</div>
+                            </div>
+                        </div>
+                        <div class="row normRow">
+                            <div class="sparkler"></div>
+                            <img id="qr" src='https://chart.googleapis.com/chart?cht=qr&chl=UA%201136%2098745-34538459&chs=180x180&choe=UTF-8&chld=L|2' alt=''>
+                            <div class="smalltext">Hologram must change when moving device for ticket to be valid</div>
+                        </div>
+                    </div>
+                                    <br />
+                                                    <br />
+                                                                    <br />}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

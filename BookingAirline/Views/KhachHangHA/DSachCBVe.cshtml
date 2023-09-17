@@ -1,0 +1,212 @@
+﻿@model IEnumerable<BookingAirline.Models.ChuyenBay>
+@using BookingAirline.Models
+@{
+    ViewBag.Title = "Danh sách chuyến đi";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutPage2.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    var today = DateTime.Now;
+    var sl = Convert.ToInt32(Session["SoLuong"]);
+    var stt = 0;
+}
+
+<link href="~/Style/Css/VeMB1504.css" rel="stylesheet" />
+<link href="~/Style/Css/VeMB.css" rel="stylesheet" />
+</br>
+
+<div style="margin:0%; text-align:center">
+    <h2 style="font-weight:bold">Ticket For You For @Session["To"] to  @Session["From"]</h2>
+
+</div>
+<br />
+
+<div class="container">
+    <table class="table table-hover table-bordered js-copytextarea " cellpadding="0" cellspacing="0" border="0"
+           id="sampleTable">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var check = db.Ves.Where(s => s.MaCB == item.MaCB && s.TinhTrang == "Chưa đặt chỗ").Count();
+                TimeSpan han = (DateTime)item.NgayGio - today;
+                if (check >= sl && han.TotalHours >2)
+                {
+                    stt++;
+                    <a href="~/KhachHangHA/DSachCBVe01/@item.MaCB" style="text-decoration:none">
+                        <div class="ticket">
+                            <div class="qr_code">
+                                <img src="~/Content/images/logo.jpg" alt="Logo" />
+                            </div>
+                            <div class="content">
+                                <div class="location">
+                                    <div class="item">
+                                        @{ var MaSBdi = db.TuyenBays.Find(item.MaTBay);}
+                                        <h1>@Html.DisplayFor(modelItem => MaSBdi.SanBayDi)</h1>
+                                        <h6>@item.NgayGio</h6>
+                                    </div>
+                                    <div class="path">
+                                        <ion-icon name="airplane"></ion-icon>
+                                    </div>
+                                    <div class="item">
+                                        <h1>@Html.DisplayFor(modelItem => MaSBdi.SanBayDen)</h1>
+                                        @{ DateTime timeto = (DateTime)item.NgayGio;}
+                                        <h6>
+                                            @timeto.AddHours(2)
+                                        </h6>
+                                    </div>
+                                </div>
+
+                                <div class="info">
+                                    <div class="item">
+                                        <h4>Code</h4>
+                                        <p>@Html.DisplayFor(modelItem => item.MaCB)</p>
+                                    </div>
+                                    <div class="item">
+                                        @{var tenmb = db.MayBays.Find(item.MaMB);
+                                        }
+                                        <h4>flight</h4>
+                                        <p>@Html.DisplayFor(modelItem => item.MaMB)</p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>remaining seats</h4>
+                                        @{ var checkdsve = db.Ves.Where(s => s.MaCB == item.MaCB && s.TinhTrang == "Chưa đặt chỗ").Count();}
+                                        <p>@checkdsve</p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>Total Slot</h4>
+                                        @{ var soghe = item.SoLuongGheHang1 + item.SoLuongGheHang2 + item.SoLuongGheHang3;}
+                                        <p>@Html.DisplayFor(modelItem => soghe)</p>
+                                    </div>
+
+                                    <div class="item">
+                                        <h4>terminal</h4>
+                                        <p>P4</p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>Price</h4>
+                                        <p> 70$</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+                <br />
+            }
+            @if (stt == 0)
+            {
+                <br />
+                <h2 style="text-align:center;color:red">Sorry, there are currently no suitable flights for you</h2>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<section id="most-visited">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Most Visited Places</h2>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-mostvisited" class="owl-carousel owl-theme">
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-01.jpg" alt="">
+                            <div class="text-content">
+                                <h4>River Views</h4>
+                                <span>New York</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-02.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Lorem ipsum dolor</h4>
+                                <span>Tokyo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-03.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Proin dignissim</h4>
+                                <span>Paris</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-04.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Fusce sed ipsum</h4>
+                                <span>Hollywood</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-02.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Vivamus egestas</h4>
+                                <span>Tokyo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-04.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Aliquam elit metus</h4>
+                                <span>New York</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-03.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Phasellus pharetra</h4>
+                                <span>Paris</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-04.jpg" alt="">
+                            <div class="text-content">
+                                <h4>In in quam efficitur</h4>
+                                <span>Hollywood</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-01.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Sed faucibus odio</h4>
+                                <span>NEW YORK</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-02.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Donec varius porttitor</h4>
+                                <span>Tokyo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script>

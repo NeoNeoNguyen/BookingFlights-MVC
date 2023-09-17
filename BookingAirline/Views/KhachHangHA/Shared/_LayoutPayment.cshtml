@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="apple-touch-icon" href="~/Style/apple-touch-icon.html">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/Style/Css/fontAwesome.css">
+    <link rel="stylesheet" href="~/Style/Css/hero-slider.css">
+    <link rel="stylesheet" href="~/Style/Css/owl-carousel.css">
+    <link rel="stylesheet" href="~/Style/Css/datepicker.css">
+    <link rel="stylesheet" href="~/Style/Css/tooplate-style.css">
+    <link rel="Shortcut Icon" href="~/hinh/logo-i.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Style/Css/myStyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <script src="~/Style/Js/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="opacity:80%;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Home","Home",new {area = ""}, new {@class = "navbar-brand"})*@
+            </div>
+            <div class="navbar-collapse collapse" style="font-size:16px;">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "TrangChu", "KhachHangHA")</li>
+                    <li>@Html.ActionLink("About", "About", "KhachHangHA")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "KhachHangHA")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="~/KhachHangHA/ThongTinKH">
+                            <span class="fa fa-user">
+                                @{var user = (BookingAirline.Models.KhachHang)HttpContext.Current.Session["userKH"]; }
+                            </span>
+                            @user.UserName
+                        </a>
+                    </li>
+                    <li><a href="@Url.Action("LogOut","LoginUser")">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</body>
+@RenderBody()
+</html>

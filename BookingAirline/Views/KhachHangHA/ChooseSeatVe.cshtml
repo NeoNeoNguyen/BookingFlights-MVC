@@ -1,0 +1,404 @@
+﻿@model IEnumerable<BookingAirline.Models.Ve>
+@using BookingAirline.Models;
+
+@{
+    ViewBag.Title = "ChooseSeat";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    var macb = ViewData["MaCB"];
+    var sl = Convert.ToInt32(Session["SoLuong"]);
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!--Icon-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<div class="Title" style="display:flex;">
+    <div class="title-de" style="margin-left: 590px">
+        <h2 style="text-align:center">ChooseSeat : @macb</h2>
+    </div>
+    <div style="line-height:82px; margin-left:15px">
+        @{ var KH = (BookingAirline.Models.KhachHang)Session["userKH"];
+                        var WL = database.Wishlists.Where(s => s.MaCBVe == macb && s.MaKH == KH.IDKH).FirstOrDefault();
+                        if (WL != null)
+                        {
+            <button style="border:none;background-color:white;" id="macb" value="@macb">
+                <i class="fa fa-heart" id="like" aria-hidden="true" style="font-size:29px; color:red"></i>
+            </button> }
+                        else
+                        {
+            <button style="border:none;background-color:white;" id="macb" value=@macb>
+                <i class="fa fa-heart" id="like" aria-hidden="true" style="font-size:29px; color:gray"></i>
+            </button> } }
+    </div>
+</div>
+
+<h3 style="text-align:center;color:red" id="Warning" hidden>The quantity you selected exceeds the original quantity !</h3>
+<link href="~/Style/Css/style.css" rel="stylesheet" />
+<div class="container">
+    <form action="/KhachHangHA/ChooseSeatVe" method="post" id="submit">
+        <div class="col">
+            <div class="col-lg-5">
+                <h2 style="text-align:center">
+                    Flight Summary
+                </h2>
+                @{
+                    var checkmacb = database.ChuyenBays.Where(s => s.MaCB == macb).FirstOrDefault();
+                    var matb = database.TuyenBays.Where(s => s.MaTBay == checkmacb.MaTBay).FirstOrDefault();
+                    var sanbaydi = database.SanBays.Where(s => s.MaSB == matb.SanBayDi).FirstOrDefault();
+                    var sanbayden = database.SanBays.Where(s => s.MaSB == matb.SanBayDen).FirstOrDefault();
+                }
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5 style="font-weight:bold">
+                            @sanbaydi.TenSB (@sanbaydi.MaSB) : @checkmacb.NgayGio
+                        </h5>
+                    </div>
+                    <div class="col-lg-8">
+                        <div style="padding-left:70px">
+                            <i class="material-icons">flight_takeoff</i>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div>
+                            <i class="material-icons" style="font-size:30px;color:red">report_problem</i>
+                        </div>
+                    </div>
+                    <div class="col-lg-2" style="justify-content:center">
+                    </div>
+                    <div class="col-lg-1" style="justify-content:center">
+                        <div style="height: 100px; width: 4px; background-color: rgb(1, 148, 243);">
+                        </div>
+                    </div>
+                    <div class="col-lg-3" style="padding-top:30px">
+                        <h4>
+                            <i class="material-icons">schedule</i>
+                            @checkmacb.ThoiGianBay
+                        </h4>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <h3 style="text-align:center;color:red">
+                            The schedule can be changed !
+                        </h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div style="padding-left: 70px">
+                            <i class="material-icons">flight_land</i>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <h5 style="font-weight:bold">
+                            @{
+                                DateTime timeto = (DateTime)checkmacb.NgayGio;
+                            }
+                            @sanbayden.TenSB (@sanbayden.MaSB): @timeto.AddHours(2)
+                        </h5>
+                    </div>
+                </div>
+                <br />
+                <div class="FD_box">
+
+                    <h3 style="text-align:center;font-weight:bold;">
+                        Flight details
+                    </h3>
+                    <div class="row">
+                        <div class="col-lg-1" style="padding-top:6px;">
+                            <i class="material-icons">work</i>
+                        </div>
+                        <div class="col-lg-11">
+                            <h4>
+                                Baggage 0kg (buy at booking)
+                            </h4>
+                        </div>
+                        <div class="col-lg-1" style="padding-top:6px;">
+                            <i class="material-icons">event_seat</i>
+                        </div>
+                        <div class="col-lg-11">
+                            <h4>
+                                Cabin baggage 7 kg
+                            </h4>
+                        </div>
+                        <div class="col-lg-1" style="padding-top:6px">
+                            <i class="material-icons">info</i>
+                        </div>
+                        @{
+                            var maybay = database.MayBays.Find(checkmacb.MaMB);
+                        }
+                        <div class="col-lg-11" style="padding-top:5px">
+                            <span style="font-weight:bold;font-size:18px">Aircraft: </span> @maybay.LoaiMayBay
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="plane">
+                    <div class="cockpit">
+                        <h1>
+                            Please select 1 or more seats !
+                        </h1>
+                    </div>
+                    <div class="exit exit--front fuselage">
+
+                    </div>
+                    <ol class="cabin fuselage">
+                        @{
+                            var stt = 1;
+                            var stt2 = 1;
+                            if ((Model.Count()) > 0)
+                            {
+                                var row = ((Model.Count()) / 6) + 1;
+                                for (int i = 1; i < row + 1; i++)
+                                {
+                                    <li class="row row--1">
+                                        <ol class="seats" type="A">
+                                            @{
+                                                for (int y = stt2; y <= 6 * stt; y++)
+                                                {
+                                                    var slot = database.Ves.Where(s => s.MaVe == "VE" + stt2 && s.MaCB == macb).FirstOrDefault();
+                                                    if (slot != null)
+                                                    {
+                                                        if (slot.TinhTrang == "Chưa đặt chỗ")
+                                                        {
+                                                            <li class="seat">
+                                                                <input type="checkbox" id="@stt2" value="@slot.MaVe" />
+                                                                <label for="@stt2">@stt2</label>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="seat">
+                                                                <input disabled type="checkbox" id="@stt2" value="@slot.MaVe" />
+                                                                <label for="@stt2">@stt2</label>
+                                                            </li>
+                                                        }
+
+                                                        stt2++;
+                                                    }
+
+                                                }
+                                            }
+                                        </ol>
+                                    </li>
+                                    stt++;
+                                }
+                            }
+
+                        }
+                    </ol>
+                    <div class="exit exit--back fuselage">
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3">
+                <div class="booking-details">
+                    <h2>Booking Details</h2>
+
+                    <h4> Selected Seats (<span id="counter">0 / @sl</span>):</h4>
+                    <ul id="selected-seats">
+                    </ul>
+                    <button type="submit" class="btn btn-success" id="Next" disabled value="">Next</button>
+                    <div id="legend"></div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<section id="most-visited">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Most Visited Places</h2>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-mostvisited" class="owl-carousel owl-theme">
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-01.jpg" alt="">
+                            <div class="text-content">
+                                <h4>River Views</h4>
+                                <span>New York</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-02.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Lorem ipsum dolor</h4>
+                                <span>Tokyo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-03.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Proin dignissim</h4>
+                                <span>Paris</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-04.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Fusce sed ipsum</h4>
+                                <span>Hollywood</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-02.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Vivamus egestas</h4>
+                                <span>Tokyo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-04.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Aliquam elit metus</h4>
+                                <span>New York</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-03.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Phasellus pharetra</h4>
+                                <span>Paris</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-04.jpg" alt="">
+                            <div class="text-content">
+                                <h4>In in quam efficitur</h4>
+                                <span>Hollywood</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-01.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Sed faucibus odio</h4>
+                                <span>NEW YORK</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/hinh/place-02.jpg" alt="">
+                            <div class="text-content">
+                                <h4>Donec varius porttitor</h4>
+                                <span>Tokyo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- partial -->
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+<script src="~/Style/Js/script.js"></script>
+<script>
+    var html = "";
+    var quantity = 0;
+    var sl = @sl;
+    $('input[type="checkbox"]').change(function () {
+
+        var $this = $(this);
+        console.log("Bạn chọn", $(this).val());
+        if ($this.is(":checked")) {
+            console.log(quantity)
+            console.log(sl);
+            if (quantity >= sl) {
+                console.log('Vượt quá số lần chọn ');
+                $(this).prop('checked', false);
+                $('#Warning').prop('hidden', false);
+            } else {
+                quantity++;
+                html = `<div id="${$this.val()}">
+                        <p style="font-size:20px">
+                            Bạn đã chọn vé:  ${$this.val()}
+                        </p>
+                    </div>`;
+                $('#selected-seats').append(html);
+                $('#counter').html(quantity + '/' + sl);
+                var vitri = $this.val().substring(2, 4);
+                $('#' + vitri).attr('name', 'Ma' + vitri);
+                $('#submit').attr('action', '/KhachHangHA/ChooseSeatVe/' + quantity)
+            }
+        }
+        else {
+            $('#Warning').attr('hidden', true);
+            quantity -= 1;
+            var vitri = $this.val().substring(2, 4);
+            $('#counter').html(quantity + '/' + sl);
+            $('#' + $this.val()).remove();
+            $('#' + vitri).removeAttr('name');
+            $('#submit').attr('action', '/KhachHangHA/ChooseSeatVe/' + quantity)
+        }
+        if (quantity == sl) {
+            $('#Next').prop('disabled', false);
+        }
+        else {
+            $('#Next').attr('disabled', true);
+        }
+    })
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#macb').click(function () {
+            var CB = $(this).val();
+            console.log(CB);
+            $.ajax({
+                url: '@Url.Action("WhishList")',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: CB },
+                success: function (res)
+                {
+                    if (res.Data == true) {
+                        alert("Bạn đã thêm thành công");
+                        $("#like").attr('style', 'font-size:29px; color:red');
+
+                    }
+                    else if (res.Data01 == true) {
+                        alert("Bạn đã xóa thành công");
+                        $("#like").attr('style', 'font-size:29px; color:gray');
+                    }
+
+                },
+            });
+        });
+    });
+</script>

@@ -1,0 +1,172 @@
+﻿@model BookingAirline.Models.Voucher
+
+@{ ViewBag.Title = "CreatePromotion";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml"; }
+<link href="~/Content/Create promotion.css" rel="stylesheet" />
+<h2>CreatePromotion</h2>
+<div class="Main-content">
+
+    @using (Html.BeginForm())
+    {
+@Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <span>Mã khuyến mãi</span>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.MaVC, new { htmlAttributes = new { @class = "form-control", @id = "Mavc" } })
+                            @Html.ValidationMessageFor(model => model.MaVC, "", new { @class = "text-danger" })
+                            <span id="error" style="color:red"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Tên khuyến mãi</span>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TenVC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenVC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <span>Ngày bắt đầu</span>
+                        <div class="col-md-10">
+                            <input type="date" id="start-date" min=@DateTime.Now.ToString("yyyy-MM-dd") name="NgayApDung" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.NgayApDung, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Ngày kết thúc</span>
+                        <div class="col-md-10">
+                            <input type="date" id="end-date" min=@DateTime.Now.ToString("yyyy-MM-dd") name="NgayHetHan" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.NgayHetHan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Chiết khấu</span>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ChietKhau, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ChietKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Tình trạng</span>
+                        <div class="col-md-10">
+                            @Html.DropDownList("SelectTT", new List<SelectListItem>
+                                                 {
+                             new SelectListItem { Text= "Active", Value = "Active",},
+                             new SelectListItem { Text= "Finish", Value = "Finish"},
+}, "-- Select TT --", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" id="btnSave" class="btn btn-primary " />
+                        </div>
+
+                    </div>
+
+                </div>
+                                <div>
+                                    @Html.ActionLink("Back to List", "Promotion")
+                                </div>}
+
+</div>
+@section script{
+    <script>
+    var endDateField = document.getElementById("end-date");
+        var startDateField = document.getElementById("start-date");
+        startDateField.addEventListener("change", function () {
+            endDateField.min = startDateField.value;
+            console.log(startDateField.value)
+        });</script>
+    <script>
+    LoadData();
+        $(document).ready(function () {
+            $('#btnSave').click(function () {
+                var mavc = $('#Mavc').val();
+
+                var model = {
+                    MaVC= mavc
+
+                };
+                $.ajax({
+                    url: '/NhanVien/CreatePromotion',
+                    type: 'POST',
+                    data: model,
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+        //function checkInput() {
+        //    var input = $('#Mavc').val();
+        //    if (input === '') {
+        //        $('#error').html('Bạn phải nhập thông tin');
+        //    } else {
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/NhanVien/KTMavc",
+        //            data: { input: input },
+        //            success: function (result) {
+        //                if (result.isValid) {
+        //                    $('#error').html('');
+        //                } else {
+        //                    $('#error').html('Mã voucher này đã có sẵn');
+        //                }
+        //            }
+        //        });
+        //    }
+        //}</script>
+    <script>
+
+        $("#Mavc").on('input', function () {
+            var inputval = $(this).val();
+            console.log(inputval); //Dùng để check value biến hứng khi có sự kiện người dùng tác động vào
+            var isDup = false;
+
+            //Tạo một Ajax request với controller và action tương ứng
+            $.ajax({
+                url: '@Url.Action("KTMavc", "NhanVien")',
+                type: 'POST',
+                data: {
+                    input:inputval
+                },
+                success: function (response) {
+                    if (response) {
+                        //Nếu dữ liệu đã tồn tại, hiển thị thông báo
+
+                        var html = '<p> Dữ liệu đã tồn tại<p>'
+$('#error').html(html);
+                        $("#btnSave").attr("disabled", "disabled");
+                    }
+                    else {
+                        if (inputval.length == 0) {
+                            var html1 = 'Không được để trống'
+                            $('#error').html(html1);
+                            $("#btnSave").prop("disabled", false);
+                        } else {
+                            var html1 = 'Checking...'
+                            $('#error').html(html1);
+                            $("#btnSave").prop("disabled", false);
+                        }
+
+                    }
+                }
+            })
+        })
+    </script>
+
+}

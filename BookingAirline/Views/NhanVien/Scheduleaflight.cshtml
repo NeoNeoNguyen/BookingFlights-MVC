@@ -1,0 +1,498 @@
+﻿﻿@model BookingAirline.Models.ChuyenBay
+@using BookingAirline.Models
+@{
+    ViewBag.Title = "Scheduleaflight";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    var today = DateTime.Now;
+    ViewBag.active4 = "active";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="jquery-3.6.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<style>
+    .error-message {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    var macb = (string)TempData["machuyenbay"];
+    if (checkmess == "success")
+    {
+        <script>
+            swal({
+                title: "Đã thêm chuyến bay thành công",
+                text: "Mã chuyến bay  @macb đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "SuaThanhCong")
+    {
+        <script>
+            swal({
+                title: "Đã sửa chuyến bay thành công",
+                text: "Mã chuyến bay  @macb đã được sửa đổi mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "XoaThanhCong")
+    {
+        <script>
+            swal({
+                title: "Đã xóa chuyến bay thành công",
+                text: "Mã chuyến bay  @macb đã được xóa",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    };
+
+
+}
+
+<h2>Schedulea flight</h2>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="~/NhanVien/TrangChu" style="text-decoration: none; color: #6c757d">
+            Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Schedulea flight</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-body">
+        DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+        <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 mb-3" style="margin-right:-46px">
+        <div class="btn btn-secondary text-white">
+            <a data-toggle="modal" data-target="#myModal01">Add Schedule </a>
+            <i class="fas fa-calendar me-2"></i>
+        </div>
+    </div>
+    <div class="col-md-2 mb-3">
+        <div class="btn btn-primary text-white">
+            <a data-toggle="modal" data-target="#myModal" data->Add Plane</a>
+            <i class="fas fa-plane me-1"></i>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-success btn-sm print-file" title="In" onclick="myApp.printTable()" style="margin: 0 0 8px -15px">
+            <i class="fas fa-print"></i> In dữ liệu
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Flight
+    </div>
+    <div class="tab-content">
+        <div id="home" class="tab-pane active">
+            <div class="card-body table-responsive">
+                <table id="datatablesSimple" class="display stripe hover order-column row-border">
+                    <thead>
+                        @*//Phần render*@
+                        <tr>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb ">Mã chuyến bay</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb ">Mã máy bay</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Mã tuyến bay</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Ngày giờ</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Thời gian bay</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Tổng số ghế:</th>
+                            <th colspan="4" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Số lượng</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb"> Tình trạng</th>
+                            <th rowspan="2" style="text-align:center; border: 1px solid rgba(34,36,38,.1); background: #f9fafb">Chức năng</th>
+                        </tr>
+                        <tr>
+                            <th>G1</th>
+                            <th>G2</th>
+                            <th>G3</th>
+                            <th>Còn lại</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTableBody">
+                        @{ var ttcb = database.ChuyenBays.ToList();
+                            foreach (var item01 in ttcb)
+                            {
+                                <tr>
+                                    <td style="text-align:center" >@item01.MaCB</td>
+                                    <td style="text-align:center">@item01.MaMB</td>
+                                    <td style="text-align:center">@item01.MaTBay</td>
+                                    <td style="text-align:center">@item01.NgayGio</td>
+                                    <td style="text-align:center">@item01.ThoiGianBay</td>
+                                    @{ var tongghe = item01.SoLuongGheHang1 + item01.SoLuongGheHang2 + item01.SoLuongGheHang3;}
+                                    <td style="text-align:center">
+                                        @tongghe
+                                    </td>
+                                    <td style="text-align:center">
+                                        @item01.SoLuongGheHang1
+                                    </td>
+                                    <td style="text-align:center">@item01.SoLuongGheHang2</td>
+                                    <td style="text-align:center">@item01.SoLuongGheHang3</td>
+                                    @{
+                                        var checkdsve = database.Ves.Where(s => s.MaCB == item01.MaCB && s.TinhTrang == "Đã thanh toán").Count();
+                                        var slgh = item01.SoLuongGheHang1 + item01.SoLuongGheHang2 + item01.SoLuongGheHang3;
+                                        var slveconlai = slgh - checkdsve;}
+                                    <td style="text-align:center">
+                                        @slveconlai
+                                    </td>
+
+                                    <td style="text-align:center">
+                                        @{
+                                            TimeSpan han = (DateTime)item01.NgayGio - today;
+                                            if (slveconlai < 10 && han.Days <= 5 && han.Days>=0)
+                                            {
+                                                <span class="badge bg-secondary">Sắp hết hạn và đặt chỗ</span>
+                                            }
+                                            else if (han.Days >= 0 && han.TotalHours >2)
+                                            {
+                                                <span class="badge bg-success">Còn hiệu lực</span>
+                                            }
+                                            else if (han.Days == 0 &&  han.TotalHours <= 2 && han.TotalHours >=0)
+                                            {
+                                                <span class="badge bg-success">Đã đóng check in</span>
+                                            }
+                                            else if (han.Days <= 0)
+                                            {
+                                                <span class="badge bg-warning">Hết hiệu lực</span>
+                                            }
+
+                                        }
+                                    </td>
+                                    <td style="text-align:center">
+                                        @{ var ctcb = database.ChiTietChuyenBays.Where(s => s.MaCTCB == item01.MaCB).FirstOrDefault();
+                                            <a href="~/NhanVien/Chitietcb/@item01.MaCB" class="btn btn-info btn-sm edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            if (han.Days > 0)
+                                            {
+                                                <button value="@item01.MaCB" id="MaCbay" data-toggle="modal" data-target="#myModal03" class="btn btn-danger btn-sm edit">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+                                            }
+                                            else if (han.Days == 0 &&  han.TotalHours > 2 )
+                                            {
+                                                <button value="@item01.MaCB" id="MaCbay" data-toggle="modal" data-target="#myModal03" class="btn btn-danger btn-sm edit">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+                                            }
+                                            else if (han.Days <= 0 && han.TotalHours<=2)
+                                            {
+                                                
+                                            }
+                                        }
+                                        @*<a href="/NhanVien/DeleteFlight/@item01.MaCB" onclick=" return confirm('Are you sure you want to delete ?')" class="btn btn-danger btn-sm edit">
+                                                <i class="fa fa-remove"></i>
+                                            </a>*@
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--Form thêm Sân bay-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add new Air plan</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                <form action="~/NhanVien/AddPlan" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập mã máy bay</label>
+                                <input class="form-control text-box single-line" name="MaMB" type="text" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập loại máy bay</label>
+                                <input class="form-control" id="ChietKhau" name="LoaiMayBay" type="text" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <input type="submit" value="Add new" class="btn btn-success" />
+                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cancel</a>
+                                <BR>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Form thêm tuyến bay-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add new Air plan</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                <form action="~/NhanVien/AddSchulea" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            @*<div class="form-group col-md-12">
+            <label class="control-label">Nhập tuyến bay</label>
+            <input class="form-control text-box single-line"  name="MaTbay" type="text" required>
+        </div>*@
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Chọn mã máy bay</label>
+                                <select class="form-control " name="MaMB" type="text" required>
+                                    @{ var mb = database.MayBays.ToList();
+                                        foreach (var item in mb)
+                                        {
+                                            var tenmb = database.MayBays.Find(item.MaMB);
+                                            <option value="@item.MaMB">@item.MaMB -- @tenmb.LoaiMayBay</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Chọn mã tuyến bay</label>
+                                <select class="form-control " name="MaTBay" type="text" required>
+                                    @{ var tb = database.TuyenBays.ToList();
+                                        foreach (var item in tb)
+                                        {
+                                            <option value="@item.MaTBay">@item.MaTBay (@item.SanBayDi - @item.SanBayDen)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập ngày giờ khởi hành</label>
+                                <input class="form-control" name="NgayGio" type="datetime-local" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập thời gian bay</label>
+                                <input class="form-control" name="ThoiGianBay" type="text" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập số lượng G1:</label>
+                                <input class="form-control" name="SoLuongGheHang1" type="number" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập đơn giá G1:</label>
+                                <input class="form-control" name="dongiaG1" type="number" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập số lượng G2:</label>
+                                <input class="form-control" name="SoLuongGheHang2" type="number" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập đơn giá G2:</label>
+                                <input class="form-control" name="dongiaG2" type="number" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập số lượng G3:</label>
+                                <input class="form-control" name="SoLuongGheHang3" type="number" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập đơn giá G3:</label>
+                                <input class="form-control" name="dongiaG3" type="number" required>
+                            </div>
+                            <div id="error-message" class="error-message"></div>
+                            <div class="form-group col-md-8">
+                                <input name="checkbox01" value="1" type="radio" required /> Bổ sung thên chuyến bay (nếu có) <br />
+                                <input name="checkbox01" value="0" type="radio" required /> Không có
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <input type="submit" value="Add new" id="ThemCB" class="btn btn-success" />
+                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cancel</a>
+                                <BR>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Form thêm thông tin chi tiết chuyến bay-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal02" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add detaile schulea</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                <form action="~/NhanVien/AdddetailSchulea" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            <input name="STT" type="number" disabled hidden />
+                            <input name="MaCTCB" type="text" disabled hidden />
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập sân bay trung gian</label>
+                                <input class="form-control text-box single-line" name="SanBayTrungGian" type="text" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập thời gian dừng: </label>
+                                <input class="form-control" name="ThoiGianDung" type="text" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập ghi chú (nếu có):</label>
+                                <input class="form-control" name="GhiChu" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add new" class="btn btn-success" />
+                            <a class="btn btn-primary" href="#">Cancel</a>
+                            <BR>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Xóa thông tin chuyến bay -->
+<!--Modal xác nhận xóa Thông tin chuyến bay-->
+<div class="modal" id="myModal03" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure? You want to Delete this airport</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Cancle</a>
+                <a href="#" class="btn btn-danger" id="ConfirmDelete">Confirm</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('datatablesSimple');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+
+        $('#myTableBody').on("click", "#MaCbay", function () {
+            $('.myModal03').show();
+            var value = $(this).val();
+            console.log("Bạn vừa chọn chuyến bay" + value);
+            $('#ConfirmDelete').click(function () {
+                var macb = value;
+                $.ajax({
+                    type: "POST",
+                    url: "/NhanVien/DeleteFlight/" + macb,
+                    success: function (res) {
+                        if (res.success == true) {
+                            window.location.reload();
+                        }
+                        else {
+
+                        }
+                    }
+                })
+            })
+        }); 
+        $(document).ready(function () {
+            $('input[name="dongiaG1"], input[name="dongiaG2"], input[name="dongiaG3"]').on('change', function () {
+                var G1 = parseFloat($('input[name="dongiaG1"]').val());
+                var G2 = parseFloat($('input[name="dongiaG2"]').val());
+                var G3 = parseFloat($('input[name="dongiaG3"]').val());
+
+                if (G1 <= G2 || G2 <= G3) {
+                    $('#error-message').text('Đơn giá G1 phải lớn hơn G2 và G2 phải lớn hơn G3');
+                    $('#ThemCB').prop("disabled", true);
+
+                } else {
+                    $('#error-message').text('');
+                    $('#ThemCB').prop("disabled", false);
+                }
+            });
+        });
+
+    </script>
+}
+@{
+    int check = Convert.ToInt32(TempData["themthongtin"]);
+    if (check == 1)
+    {
+        <script>
+            $(document).ready(function () {
+                $('#myModal02').modal('show');
+            });
+
+        </script>
+    }
+    else if (check == 2)
+    {
+
+        <script>
+            $('#EditcbModal').modal('show');
+        </script>
+    }
+}

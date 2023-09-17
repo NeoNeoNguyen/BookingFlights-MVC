@@ -1,0 +1,7 @@
+﻿@import url('DetailCus.css');
+.row .col-lg-8 {
+    background-color: #DDDDDD;
+    margin-top: 10px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius:20px;
+}

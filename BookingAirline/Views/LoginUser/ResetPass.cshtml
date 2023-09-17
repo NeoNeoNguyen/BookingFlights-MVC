@@ -1,0 +1,49 @@
+﻿
+@*@{
+    ViewBag.Title = "ResetPass";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutPage1.cshtml";
+}*@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ResetPass</title>
+
+    <link href="~/Content/ResetPass.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form method="post" action="~/LoginUser/ResetPass">
+
+
+        <h4>RESET PASSWORD</h4>
+        <div class="input-container ic1">
+            <label for="Email" class="placeholder">Email:</label>
+
+            <input id="email" type="email" class="input" name="email" required />
+
+        </div>
+        <div class="input-container ic2">
+            <label for="Username" class="placeholder">Username: </label>
+
+            <input id="username" type="text" class="input" name="Username" required />
+
+        </div>
+        <br />
+
+        <p class="text-danger">@TempData["error"]</p>
+
+
+        <button type="submit" class="btn btn-orange btn-block">Reset</button>
+        <br />
+        <i>*Password sẽ được đặt về mặc định là "12345678" sau khi reset* </i>
+    </form>
+</body>
+</html>
+

@@ -1,0 +1,496 @@
+﻿﻿@using BookingAirline.Models
+@{
+    ViewBag.Title = "FlightRoute";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    ViewBag.active5 = "active";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="jquery-3.6.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    var matb = (string)TempData["matuyenbay"];
+    if (checkmess == "success")
+    {
+        <script>
+            swal({
+                title: "Đã thêm tuyến bay thành công",
+                text: "Mã tuyến bay  @matb đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "SuaTBTC")
+    {
+        <script>
+            swal({
+                title: "Đã sửa chuyến bay thành công",
+                text: "Mã tuyến bay  @matb đã được sửa đổi mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Error")
+    {
+        <script>
+            swal({
+                title: "Thêm tuyến bay không thành công",
+                text: "Vui lòng kiểm tra lại thông tin và nhập lại! ",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Error01")
+    {
+        <script>
+            swal({
+                title: "Thêm tuyến bay không thành công",
+                text: "Mã sân bay đi và sân bay đến không được trùng nhau ! ",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "Error02")
+    {
+        <script>
+            swal({
+                title: "Thêm tuyến bay mới không thành công",
+                text: "Mã sân bay đi và sân bay đến đã tồn tại trong hệ thống ! ",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    }
+    if (checkmess == "XoaTBay")
+    {
+        <script>
+            swal({
+                title: "Xóa tuyến bay thành công",
+                text: "Thông tin tuyến bay @matb đã được xóa khỏi hệ thống! ",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    };
+
+}
+
+
+<h2>Flight Route</h2>
+
+<br />
+<div class="row">
+    <div class="col-md-2 mb-2">
+        <div class="btn btn-secondary text-white">
+            <a style="text-decoration:none;color:white" data-toggle="modal" data-target="#myModal01">Add route </a>
+            <i class="fas fa-calendar me-2"></i>
+        </div>
+    </div>
+    <div class="col-md-2 mb-2">
+        <div class="btn btn-primary text-white">
+            <a style="text-decoration:none;color:white" data-toggle="modal" data-target="#myModal">Add Airport</a>
+            <i class="fas fa-plane me-1"></i>
+        </div>
+    </div>
+
+</div>
+<br />
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Flight
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                @*//Phần render*@
+                <tr>
+                    <th>Mã tuyến bay</th>
+                    <th>Sân bay đi</th>
+                    <th>Tên sân bay đi</th>
+                    <th>Sân bay đến</th>
+                    <th>Tên sân bay đến</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody >
+                @{
+                    var dstb = database.TuyenBays.ToList();
+                    var stt = 0;
+                    foreach (var item01 in dstb)
+                    {
+                        stt++;
+                        <tr>
+                            @{ var tensbdi = database.SanBays.Find(item01.SanBayDi);
+                                var tensbden = database.SanBays.Find(item01.SanBayDen);}
+                            <td>@item01.MaTBay</td>
+                            <td>@item01.SanBayDi</td>
+                            <td>@tensbdi.TenSB</td>
+                            <td>@item01.SanBayDen</td>
+                            <td>@tensbden.TenSB</td>
+                            <td>
+                                <a href="~/NhanVien/DetailFR/@item01.MaTBay" class="btn btn-info btn-sm edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                @*<a href="~/NhanVien/DeleteFR/@item01.MaTBay" onclick=" return confirm('Are you sure you want to delete ?')" class="btn btn-danger btn-sm edit">
+                                        <i class="fa fa-remove"></i>
+                                    </a>*@
+                                <button data-id="myModal03" data-value="@item01.MaTBay" data-toggle="modal" data-target="#myModal03" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-remove"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    };
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Thêm sân bay-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add new Airport</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                <form action="~/NhanVien/AddAirport" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập mã sân bay</label>
+                                <input class="form-control text-box single-line" id="InputMaSB" name="MaSB" type="text" required>
+                                <span id="error" style="color:red"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Nhập tên sân bay</label>
+                                <input class="form-control" id="InputTenSB" name="TenSB" type="text" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" value="" id="btnSave" class="btn btn-secondary">Add new </button>
+                            <button type="button" class="btn btn-primary " data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!--Thêm tuyến bay-->
+<!-- The Modal -->
+<div class="modal fade" id="myModal01" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add new Airport</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                <form action="~/NhanVien/AddRoute" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Chọn mã sân bay đi</label>
+                                <select class="form-control col-md-8" id="MaSB" name="SanBayDi" type="text" required>
+                                    <option selected disabled="disabled">--Please choose an option--</option>
+                                    @{ var masb = database.SanBays.ToList();
+                                        foreach (var item in masb)
+                                        {
+                                            <option value="@item.MaSB">@item.MaSB - (@item.TenSB)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label ">Chọn mã sân bay đến</label>
+                                <select class="form-control col-md-8 " id="MaSB" name="SanBayDen" type="text" required>
+                                    <option selected disabled="disabled">--Please choose an option--</option>
+                                    @{
+                                        foreach (var item01 in masb)
+                                        {
+                                            <option value="@item01.MaSB">@item01.MaSB - (@item01.TenSB)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="btnSaveAir" class="btn btn-secondary">Add new </button>
+                            <button type="button" class="btn btn-primary " data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Phần modal hiển thị thông tin chỉnh sửa Flight Route-->
+<!-- The Modal -->
+
+<div class="modal fade" id="myModal02" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add new Airport</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                <form action="~/NhanVien/EditFR" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Chọn mã sân bay</label>
+                                <select class="form-control " name="MaSB" type="text" required>
+                                    @{ var masb01 = database.SanBays.ToList();
+                                        foreach (var item in masb01)
+                                        {
+                                            <option value="@item.MaSB">@item.MaSB</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập sân bay đi</label>
+                                <input class="form-control" name="SanBayDi" type="text" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Nhập sân bay đến</label>
+                                <input class="form-control" name="SanBayDen" type="text" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add new" class="btn btn-success" />
+                            <a class="btn btn-primary" data-dismiss="modal" href="#">Cancel</a>
+                            <BR>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Modal xác nhận xóa Thông tin tuyến bay-->
+<div class="modal hide fade" id="myModal03" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure? You want to Delete this airport</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Cancle</a>
+                <a href="#" class="btn btn-danger" id="XacNhanXoa" onclick="">Confirm</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section script{
+
+    <script>
+        LoadData();
+        $(document).ready(function () {
+            $('#btnSave').click(function () {
+                var masb = $('#InputMaSB').val();
+                var tenSB = $('#InputTenSB').val();
+                var model = {
+                    MaSB: masb,
+                    TenSB: tenSB
+
+                };
+                $.ajax({
+                    url: '/NhanVien/AddAirport',
+                    type: 'POST',
+                    data: model,
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+        //Thêm mới tuyến bay
+        $(document).ready(function () {
+            $('#btnSaveAir').click(function () {
+                var masb = $('#MaSB').val();
+                var sbdi = $('#SanBayDi').val();
+                var sbden = $('#SanBayDen').val();
+                var model = {
+                    MaSB: masb,
+                    SanBayDi: sbdi,
+                    SanBayDen: sbden
+                };
+                $.ajax({
+                    url: '/NhanVien/AddRoute',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: model,
+                    success: function (res) {
+                        if (res.success) {
+                            console.log("Them moi thanh cong");
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+        function LoadData() {
+            $.ajax({
+                url: '/NhanVien/GetData',
+                type: 'GET',
+                success: function (res) {
+                    if (res.TotalItems > 0) {
+                        var SetData = $("#showdata");
+                        var items = res.Data;
+                        var html = "";
+                        console.log(items);
+                        for (let i = 0; i < res.TotalItems; i++) {
+                            html += "<tr>";
+                            html += "<td>" + items[i].MaTBay + "</td>";
+                            html += "<td>" + items[i].MaSB + "</td>";
+                            html += "<td>" + items[i].SanBayDi + "</td>";
+                            html += "<td>" + items[i].SanBayDen + "</td>";
+                            html += "<td></td>";
+                            html += "</tr>";
+                        }
+                        SetData.html(html);
+                    }
+                }
+            })
+        }
+        //Thực hiện lấy id theo hàng mình muốn xóa
+        $(document).ready(function () {
+            $(".btn-danger").click(function () {
+                var id = $(this).data("id");
+                var value = $(this).data("value");
+                //$("#XacNhanXoa").attr("onclick", `ConfirmDelete(${value})`);
+                $("#XacNhanXoa").attr("data-value", `${value}`);
+                console.log("Id la " + id + " Voi value la " + value);
+            })
+            $("#XacNhanXoa").click(function () {
+                var data_del = $(this).data("value");
+                ConfirmDelete(data_del);
+            })
+        })
+        function ConfirmDelete(matb) {
+            console.log(matb);
+            $.ajax({
+                type: "POST",
+                url: "/NhanVien/DeleteFR/" + matb,
+                success: function (res) {
+                    if (res.success == true) {
+                        window.location.reload();
+                    }
+                    else {
+
+                    }
+                }
+            })
+        }
+
+        function checkInput() {
+            var input = $('#InputMaSB').val();
+            if (input === '') {
+                $('#error').html('Bạn phải nhập thông tin');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/NhanVien/KTtenSB",
+                    data: { input: input },
+                    success: function (result) {
+                        if (result.isValid) {
+                            $('#error').html('');
+                        } else {
+                            $('#error').html('Sân bay này đã có sẵn');
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+    <script>
+        //Kiểm tra mã sân bay có bị trùng
+        $("#InputMaSB").on('input', function () {
+            var inputval = $(this).val();
+            console.log(inputval); //Dùng để check value biến hứng khi có sự kiện người dùng tác động vào
+            var isDuplicate = false;
+
+            //Tạo một Ajax request với controller và action tương ứng
+            $.ajax({
+                url: '@Url.Action("KTtenSB","NhanVien")',
+                type: 'POST',
+                data: {
+                    input:inputval
+                },
+                success: function (response) {
+                    if (response) {
+                        //Nếu dữ liệu đã tồn tại, hiển thị thông báo
+                        //isDuplicate = true;
+                        var html = '<p> Dữ liệu đã tồn tại</p>'
+                        $('#error').html(html);
+                        $("#btnSave").attr("disabled", "disabled");
+                    } else {
+                        if (inputval.length == 0) {
+                            var html1 = 'Không được để trống'
+                            $('#error').html(html1);
+                            $("#btnSave").prop("disabled", false);
+                        } else {
+                            var html1 = 'Checking...'
+                            $('#error').html(html1);
+                            $("#btnSave").prop("disabled", false);
+                        }
+
+                    }
+                }
+            })
+        })
+    </script>
+    <script>
+
+    </script>
+
+
+}

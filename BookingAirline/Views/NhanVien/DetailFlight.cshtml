@@ -1,0 +1,213 @@
+﻿﻿@model BookingAirline.Models.ChuyenBay
+@using BookingAirline.Models
+@{
+    ViewBag.Title = "DetailFlight";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    var sb = database.SanBays.ToList();
+}
+<br />
+<h2 style="text-align:center">Edit Flight: @Model.MaCB</h2>
+<br />
+<!-- Form chỉnh sửa thông tin chuyến bay -->
+<div class="container">
+    <form action="~/NhanVien/DetailFlight" id="EditDetaile" method="post">
+        @Html.AntiForgeryToken()
+        
+        <div class="modal-body">
+            <div class="row">
+                @Html.HiddenFor(model => model.MaCB)
+                @Html.HiddenFor(model => model.SoLuongGheHang1)
+                @Html.HiddenFor(model => model.SoLuongGheHang2)
+                @Html.HiddenFor(model => model.SoLuongGheHang3)
+                <div class="col-md-4">
+                    <img src="~/hinh/HinhNen/8d80128d9cb6ca236f7e4b7babdc98ed.jpg" height="500" width="350" />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row" id="themdong">
+                        <div class="col-md-12">
+                            <div style="font-size:15px">----Flight Infomation----</div>
+                        </div>
+                        <div class="col-md-5" id="ThongtinMB">
+                            <label class="control-label">Airplane code</label>
+                            <select class="form-control" id="ChonMB" name="MaMB" type="text" required>
+                                @{ var mb = database.MayBays.ToList();
+                                    var tenmb02 = database.MayBays.Where(s => s.MaMB == Model.MaMB).FirstOrDefault();
+                                    <option selected value="@Model.MaMB">@Model.MaMB -- @tenmb02.LoaiMayBay</option>
+                                    foreach (var item in mb)
+                                    {
+                                        if (item.MaMB != Model.MaMB)
+                                        {
+                                            var tenmb = database.MayBays.Find(item.MaMB);
+                                            <option value="@item.MaMB">@item.MaMB -- @tenmb.LoaiMayBay</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Route code</label>
+                            <select class="form-control" id="ChonTB" name="MaTBay" type="text" required>
+                                @{ var tb = database.TuyenBays.ToList();
+                                    var tensb01 = database.TuyenBays.Where(s => s.MaTBay == Model.MaTBay).FirstOrDefault();
+                                    <option value="@Model.MaTBay">@Model.MaTBay (@tensb01.SanBayDi - @tensb01.SanBayDen)</option>
+                                    foreach (var item in tb)
+                                    {
+                                        if (item.MaTBay != Model.MaTBay)
+                                        {
+                                            <option value="@item.MaTBay">@item.MaTBay (@item.SanBayDi - @item.SanBayDen)</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Time: </label>
+                            @*<input class="form-control " name="NgayGio" type="datetime-local" required value="@Model.NgayGio">*@
+                            @Html.TextBoxFor(Model => Model.NgayGio, "{0:yyy-MM-dd HH:mm:ss}", new { @class = "form-control", type = "datetime-local" })
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Flight time: </label>
+                            <input class="form-control" name="ThoiGianBay" type="text" required value="@Model.ThoiGianBay">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Status: </label>
+                            <select class="form-control" name="TinhTrang" type="text" required>
+                                <option selected disabled>@Model.TinhTrang</option>
+                                <option value="Active">Active</option>
+                                <option value="Delayed">Delayed</option>
+                                <option value="Cancel">Cancel</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+
+                        </div>
+                        @*<div class="form-group col-md-3">
+            <label class="control-label">Number of seats G1:</label>
+            <input class="form-control" name="SoLuongGheHang1" type="number" value="@Model.SoLuongGheHang1">
+        </div>
+        <div class="form-group col-md-3">
+            <label class="control-label">Number of seats G2:</label>
+            <input class="form-control" name="SoLuongGheHang2" type="number" value="@Model.SoLuongGheHang2">
+        </div>
+        <div class="form-group col-md-3">
+            <label class="control-label">Number of seats G3:</label>
+            <input class="form-control" name="SoLuongGheHang3" type="number" value="@Model.SoLuongGheHang3">
+        </div>*@
+                        <div class="col-md-12">
+
+                        </div>
+                        @{
+
+                            var ctcb = database.ChiTietChuyenBays.Where(m => m.MaCTCB == Model.MaCB).FirstOrDefault();
+                            if (ctcb != null)
+                            {
+                                <div class="form-group col-md-5">
+                                    <label class="control-label">Intermediate airport:</label>
+                                    <select class="form-control" id="SBTG" name="SanBayTrungGian" type="text" required>
+                                        @{
+                                            var tensb = database.SanBays.Find(ctcb.SanBayTrungGian);
+                                            <option value="@ctcb.SanBayTrungGian">@ctcb.SanBayTrungGian - @tensb.TenSB</option>
+                                            foreach (var item in sb)
+                                            {
+                                                if (ctcb.SanBayTrungGian == item.MaSB)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.MaSB">@item.MaSB - @item.TenSB</option>
+                                                }
+
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">
+                                        Stopover time:
+                                    </label>
+                                    <input class="form-control" name="ThoiGianDung" type="text" value="@ctcb.ThoiGianDung">
+                                </div>
+                                <div class="col-md-12">
+
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <label class="control-label">Notes (If any):</label>
+                                    <textarea class="form-control" name="GhiChu">@ctcb.GhiChu</textarea>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6" id="btnaddetaile">
+                                    <button id="themCTCB" class="btn btn-info" type="button">Add more flight information </button>
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-8">
+                    <button type="button" id="cancleAdd" class="btn btn-danger" hidden>Cancle add more flight information</button>
+                    <input type="submit" value="Save flight @Model.MaCB" class="btn btn-primary" />
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<div>@Html.ActionLink("Back detaile flight", "Chitietcb", new { id=Model.MaCB},new { @class="btn btn-warning"})</div>
+@section script{
+    <script>
+        $(document).ready(function () {
+            $('#themCTCB').click(function () {
+                var html = '<div class="form-group col-md-6" id="Sanbaytg">' +
+                    '<label class="control-label">Intermediate airport:</label>' +
+                    '<select class="form-control" id="SBTG" name="SanBayTrungGian" type="text" required>' +
+                    '<option selected disabled>--------Please choose--------</option>' +
+                    '@{foreach (var item in sb)
+                        {<option value="@item.MaSB">@item.MaSB - @item.TenSB</option>}} '+
+                    '</select>' +
+                    '</div>' +
+                    '<div class="form-group col-md-3" id="cvtime">' +
+                    '<label class="control-label">' +
+                    'Stopover time:' +
+                    '</label>' +
+                    '<input class="form-control" name="ThoiGianDung" type="text" required>' +
+                    '</div>' +
+                    '<div class="col-md-12" id="rong">' +
+
+                    '</div>' +
+                    '<div class="form-group col-md-9" id="note">' +
+                    '<label class="control-label">Notes (If any):</label>' +
+                    '<textarea class="form-control" name="GhiChu"required></textarea>' +
+                    '</div>';
+                $('#themdong').append(html);
+                $('#btnaddetaile').hide();
+                $('#cancleAdd').prop('hidden', false);
+                $('#EditDetaile').attr('action', '/NhanVien/DetailFlight/1');
+            });
+            $('#cancleAdd').click(function () {
+                $('#Sanbaytg').detach();
+                $('#cvtime').detach();
+                $('#rong').detach();
+                $('#note').detach();
+                $('#btnaddetaile').show();
+                $(this).attr('hidden', true);
+                $('#EditDetaile').attr('action', '/NhanVien/DetailFlight');
+            });
+        });
+
+
+
+    </script>
+}

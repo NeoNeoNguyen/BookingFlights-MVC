@@ -1,0 +1,181 @@
+﻿@model BookingAirline.Models.KhachHang
+@using BookingAirline.Models;
+@{
+    ViewBag.Title = "Promotion";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    ViewBag.active10 = "active";
+}
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="jquery-3.6.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    var mavc = (string)TempData["mavc"];
+    if (checkmess == "success")
+    {
+        <script>
+            swal({
+                title: "Đã thêm khuyến mãi thành công",
+                text: "Khuyến mãi đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "SuaThanhCong")
+    {
+        <script>
+            swal({
+                title: "Đã sửa khuyến mãi thành công",
+                text: "Khuyến mãi đã được sửa đổi mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "XoaThanhCong")
+    {
+        <script>
+            swal({
+                title: "Đã xóa khuyến mãi thành công",
+                text: "Khuyến mãi đã được xóa",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    };
+    
+
+}
+
+
+
+<h2>Promotions </h2>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="~/NhanVien/TrangChu" style="text-decoration: none; color: #6c757d">
+            Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Promotions Management</li>
+</ol>
+
+<div class="col-sm-2">
+    <a class="btn btn-success btn-sm print-file" title="In" onclick="myApp.printTable()" style="margin: 0 0 8px -15px">
+        <i class="fas fa-print"></i> In dữ liệu
+    </a>
+
+</div>
+<div class="btn btn-secondary text-white">
+  
+    <a style="text-decoration:none;color:white;"  href="~/NhanVien/CreatePromotion" >Add</a>
+
+</div>
+<br />
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Customer
+    </div>
+    
+        <table id="datatablesSimple">
+            <thead>
+                @*//Phần render*@
+                <tr>
+                    <th>Mã khuyến mãi</th>
+                    <th>Tên khuyến mãi</th>
+                    <th>Chiết khấu</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Tình trạng</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var vc = database.Vouchers.ToList();
+                    foreach (var item in vc)
+                    {
+                        <tr>
+                            <td>@item.MaVC</td>
+                            <td>@item.TenVC</td>
+                            <td>@item.ChietKhau %</td>
+                            <td>@item.NgayApDung</td>
+                            <td>@item.NgayHetHan</td>
+                            <td>@item.TinhTrang</td>
+
+                            <td>
+                                <a href="~/NhanVien/EditPro" class="btn btn-info btn-sm edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <button value="@item.MaVC" id="MaVC" data-toggle="modal" data-target="#myModal03" class="btn btn-danger btn-sm edit">
+                                    <i class="fa fa-remove"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+            
+        </table>
+    <br />
+    
+</div>
+<div class="modal" id="myModal03" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure? You want to delete this voucher</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Cancle</a>
+                <a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Confirm</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section script{
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('datatablesSimple');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+        
+        function ConfirmDelete() {
+            var mavc = $('#MaVC').val();
+            $.ajax({
+                type: "POST",
+                url: "/NhanVien/DeletePro/" + mavc,
+                success: function (res) {
+                    if (res.success == true) {
+                        window.location.reload();
+                    }
+                    else {
+
+                    }
+                }
+            })
+        }
+    </script>
+}

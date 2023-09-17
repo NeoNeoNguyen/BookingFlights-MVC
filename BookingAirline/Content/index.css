@@ -1,0 +1,50 @@
+﻿.banner {
+    background-image: url(/hinh/heading-pg1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+}
+
+.weather-content {
+    background-image: url(/hinh/weather-main1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+}
+
+#cd-logo {
+    float: left;
+    margin: 13px 0 0 5%;
+}
+
+    #cd-logo img {
+        display:flex;
+    }
+
+@media only screen and (min-width: 768px) {
+    #cd-logo {
+        margin: 23px 0 0 5%;
+    }
+}
+
+.Coop {
+   
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: left;
+}
+.logo {
+    
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.logo img {
+   
+    width: 210px;
+    height: 150px;
+    
+}

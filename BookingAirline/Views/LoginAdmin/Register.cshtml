@@ -1,0 +1,45 @@
+﻿@model BookingAirline.Models.NhanVien
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<link rel="stylesheet" href="~/Style/Css/loginStyle.css">
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-front">
+            <h2>REGISTER</h2>
+
+            @using (Html.BeginForm("Register", "LoginAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <p>@Html.LabelFor(model => model.IDNV)</p>
+                <p class="box">@Html.EditorFor(model => model.IDNV)</p>
+                <p>@Html.ValidationMessageFor(model => model.IDNV)</p>
+
+                if (ViewBag.ErrorRegister != null)
+                {
+                    <p>@ViewBag.ErrorRegister</p>
+                }
+
+                <p>@Html.LabelFor(model => model.TenNV)</p>
+                <p class="box">@Html.EditorFor(model => model.TenNV)</p>
+                <p>@Html.ValidationMessageFor(model => model.TenNV)</p>
+
+                <p>@Html.LabelFor(model => model.Password)</p>
+                <p class="box">@Html.PasswordFor(model => model.Password)</p>
+                <p>@Html.ValidationMessageFor(model => model.Password)</p>
+
+
+                <input type="submit" value="Register" />
+            }
+        </div>
+    </div>
+</div>

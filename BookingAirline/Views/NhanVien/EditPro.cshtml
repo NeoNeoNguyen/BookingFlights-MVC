@@ -1,0 +1,81 @@
+﻿@model BookingAirline.Models.Voucher
+
+@{
+    ViewBag.Title = "EditPro";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+}
+
+<link href="~/Content/Create promotion.css" rel="stylesheet" />
+<h2>EditPromotion</h2>
+<div class="Main-content">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <span>Mã khuyến mãi</span>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaVC, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaVC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span>Tên khuyến mãi</span>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TenVC, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenVC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <span>Ngày bắt đầu</span>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NgayApDung, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.NgayApDung, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span>Ngày kết thúc</span>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NgayHetHan, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.NgayHetHan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span>Chiết khấu</span>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ChietKhau, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.ChietKhau, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span>Tình trạng</span>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TinhTrang, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            @Html.ActionLink("Back to List", "Promotion")
+        </div>
+    }
+</div>

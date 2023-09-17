@@ -1,0 +1,123 @@
+﻿@model IEnumerable<BookingAirline.Models.Voucher>
+@using BookingAirline.Models
+@{
+    Layout = null;
+    BookingAirLightEntities db = new BookingAirLightEntities();
+}
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Promotion</title>
+    <link href="~/Content/Promotion.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Style/Css/tooplate-style.css">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap.min.css">
+</head>
+
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="opacity:80%;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Home","Home",new {area = ""}, new {@class = "navbar-brand"})*@
+            </div>
+            <div class="navbar-collapse collapse" style="font-size:16px;">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "TrangChu", "KhachHang")</li>
+                    <li>@Html.ActionLink("About", "About", "KhachHang")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "KhachHang")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="~/LoginUser/Login"><span class="fa fa-user"></span> Login</a></li>
+                    <li><a href="@Url.Action("SignUp","LoginUser")">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    
+    <div>
+
+        <div id="slideshow">
+            <div class="slide-wrapper">
+                <div class="slide">
+
+                    <img src="~/hinh/KM/1605156754662.jpg" />
+                </div>
+                <div class="slide">
+
+                    <img src="~/hinh/KM/vietjet-khuyen-mai-ve-0-dong-moi-ngay.jpg" />
+                </div>
+                <div class="slide">
+                    <img src="~/hinh/KM/khuyen-mai-chao-thang-6-Bamboo-Airways.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+    
+    <div class="left">
+
+        @{ var dsvc = db.Vouchers.ToList();
+            foreach (var item in dsvc)
+            {
+                <div class="noidung">
+                    <p style="font-size:50px;">@item.TenVC</p>
+                    <br />
+                    <p>Bắt đầu từ ngày @item.NgayApDung đến ngày @item.NgayHetHan</p>
+                </div>
+                <div class="center">
+
+
+                    <div class="form">
+                        <h1>Promo code</h1>
+                        <form>
+                            <div class="inputbox">
+                                <input type="text" value="@item.MaVC" required="required" readonly>
+
+                            </div>
+                            <div class="inputbox">
+                                <p>@item.ChietKhau </p>
+                            </div>
+                            <br />
+                            <div class="inputbox">
+                                <a href="~/KhachHang/TrangChu">Tìm thêm vé</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <br />
+                <hr />
+                <br />
+
+            }
+        }
+    </div>
+    <div class="right">
+        <div class="banner-banner">
+            <img src="~/hinh/KM/bnnqc.jpg" />
+        </div>
+        <div class="banner-banner">
+            <img src="~/hinh/KM/bnqc.jpg" />
+        </div>
+        <div class="banner-banner">
+            <img src="~/hinh/KM/bannerqc.png" />
+        </div>
+    </div>
+    
+</body>
+
+
+
+</html>

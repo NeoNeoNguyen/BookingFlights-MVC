@@ -1,0 +1,69 @@
+﻿@model BookingAirline.Models.KhachHang
+@{
+    ViewBag.Title = "DetailCus";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+}
+
+
+<link href="~/Style/Css/Admin/DetailCus.css" rel="stylesheet" />
+
+
+<div class="row" style="margin-right:-15px;margin-left:-15px">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="border-bottom: 1px solid #eee">Forms edit Customer @Model.IDKH</h1>
+        <div class="panel-heading" style="color: #333; background-color: #f5f5f5; border-color: #ddd ">
+            Basic Form Elements
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- Form chỉnh sửa thông tin chuyến bay -->
+<div class="row" style="height:500px">
+
+    <div class="col-lg-8"> <!--form avt và điền thông tin-->
+
+        <div class="panel panel-default" style="border-color:#ddd">
+            <div class="container">
+                <form action="~/NhanVien/DetailCus" method="post">
+                    @Html.AntiForgeryToken()
+                    @*<div class="row" style="background-color: #DDDDDD; margin-top: 10px">*@
+                    @*<div class="col-sm-6 col-md-4 user-img">
+                            <label class="control-label">Avartar</label>
+                            <div>
+                                <img width="250px" style="cirle" src="@Model.HinhAnh" alt="@Model.TenKH" class="rounded-circle" />
+                            </div>
+                        </div>*@
+                    <!-- end columns -->
+
+                    <div @*class="col-sm-6 col-md-8  user-detail"*@ @*style="text-align: center;"*@>
+                        <ul class="list-unstyled">
+                            @Html.HiddenFor(model => model.HinhAnh)
+                            @Html.HiddenFor(model => model.IDKH)
+                            @Html.HiddenFor(model => model.LoaiKH)
+                            @Html.HiddenFor(model => model.UserName)
+                            @Html.HiddenFor(model => model.Password)
+                            <li>Name:<input type="text" class="form-control" name="TenKH" placeholder="TenKH" value="@Model.TenKH" required /> </li>
+                            <li><span>Date of Birth:</span> <input type="date" class="form-control" name="NgaySinh" placeholder="NgaySinh" value="@Model.NgaySinh" required /></li>
+                            <li><span>Email:</span> <input type="email" class="form-control" name="Email" placeholder="Email" value="@Model.Email" required /></li>
+                            <li><span>Phone:</span> <input type="number" class="form-control" name="SDT" placeholder="SDT" value="@Model.SDT" required /></li>
+                        </ul>
+                        <div class="form">
+                            <div><input type="submit" value="Lưu chi tiết khách hàng @Model.IDKH này" class="btn btn-primary" /></div>
+                            <div>@Html.ActionLink("Quay lại danh sách khách hàng", "CustomerManagement")</div>
+                        </div>
+                    </div><!-- end columns -->
+                    @*</div>*@
+
+                </form>
+            </div>
+        </div>
+        @*</div>*@
+    </div>
+    <div class="left col-lg-4" style="background-image: url('../../hinh/detailCus01.jpg'); margin-top: 10px; background-size: 400px; border-top-right-radius: 20px; border-bottom-right-radius: 20px">
+        @*<div class="row" style="background-color: #CCCCCC; margin-top: 10px">*@
+        @*<img style="width:300px" src="" />*@
+        @*</div>*@
+    </div>
+</div>
+
+

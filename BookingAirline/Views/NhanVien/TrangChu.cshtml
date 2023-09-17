@@ -1,0 +1,250 @@
+﻿@model IEnumerable<BookingAirline.Models.NhanVien>
+@using BookingAirline.Models
+@{
+    ViewBag.Title = "TrangChu";
+    ViewBag.active1 = "active";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+}
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ========== All CSS files linkup ========= -->
+    <link href="~/Content/admin/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/admin/css/lineicons.css" rel="stylesheet" />
+    <link href="~/Content/admin/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/admin/css/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Content/admin/css/main.css" rel="stylesheet" />
+</head>
+
+
+<body>
+    <!-- ======== main-wrapper start =========== -->
+    <!-- ========== section start ========== -->
+    <section class="section">
+        <div class="container-fluid">
+            <!-- ========== title-wrapper start ========== -->
+            <div class="title-wrapper pt-30">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="title mb-30">
+
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-md-6">
+                        <div class="breadcrumb-wrapper mb-30">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#0">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        eCommerce
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- ========== title-wrapper end ========== -->
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="icon-card mb-30">
+                        <div class="icon purple">
+                            <i class="lni lni-cart-full"></i>
+                        </div>
+                        <div class="content">
+                            <h6 class="mb-10">New Orders</h6>
+                            <h3 class="text-bold mb-10">34567</h3>
+                            <p class="text-sm text-success">
+                                <i class="lni lni-arrow-up"></i> +2.00%
+                                <span class="text-gray">(30 days)</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End Icon Cart -->
+                </div>
+                <!-- End Col -->
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="icon-card mb-30">
+                        <div class="icon success">
+                            <i class="lni lni-dollar"></i>
+                        </div>
+                        <div class="content">
+                            <h6 class="mb-10">Total Income</h6>
+                            <h3 class="text-bold mb-10">$74,567</h3>
+                            <p class="text-sm text-success">
+                                <i class="lni lni-arrow-up"></i> +5.45%
+                                <span class="text-gray">Increased</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End Icon Cart -->
+                </div>
+                <!-- End Col -->
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="icon-card mb-30">
+                        <div class="icon primary">
+                            <i class="lni lni-credit-cards"></i>
+                        </div>
+                        <div class="content">
+                            <h6 class="mb-10">Total Expense</h6>
+                            <h3 class="text-bold mb-10">$24,567</h3>
+                            <p class="text-sm text-danger">
+                                <i class="lni lni-arrow-down"></i> -2.00%
+                                <span class="text-gray">Expense</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End Icon Cart -->
+                </div>
+                <!-- End Col -->
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="icon-card mb-30">
+                        <div class="icon orange">
+                            <i class="lni lni-user"></i>
+                        </div>
+                        <div class="content">
+                            <h6 class="mb-10">New User</h6>
+                            <h3 class="text-bold mb-10">34567</h3>
+                            <p class="text-sm text-danger">
+                                <i class="lni lni-arrow-down"></i> -25.00%
+                                <span class="text-gray"> Earning</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End Icon Cart -->
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-area me-1"></i>
+                            Area Chart Example
+                        </div>
+                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Bar Chart Example
+                        </div>
+                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="card-style calendar-card mb-30">
+                        <div id="calendar-mini"></div>
+                    </div>
+                </div>
+                <!--End Col -->
+                <div class="col-lg-7">
+                    <div class="card-style mb-30">
+                        <div class="
+                    title
+                    d-flex
+                    flex-wrap
+                    align-items-center
+                    justify-content-between
+                  ">
+                            <div class="left">
+                                <h6 class="text-medium mb-30">Sales History</h6>
+                            </div>
+                            <div class="right">
+                                <div class="select-style-1">
+                                    <div class="select-position select-sm">
+                                        <select class="light-bg">
+                                            <option value="">Today</option>
+                                            <option value="">Yesterday</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                @*end select*@
+                            </div>
+                        </div>
+                        @*End Title*@
+                        <div class="card mb-4">
+
+
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        @*//Phần render*@
+                                        <tr>
+                                            <th>Mã chuyến bay</th>
+                                            <th>Mã vé</th>
+                                            <th>Số lượng</th>
+                                            <th>Tổng tiền</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ var ttkh = db.ChiTietHDs.ToList();
+                                            foreach (var item in ttkh)
+                                            {
+                                                <tr>
+                                                    <td>@item.MaCB</td>
+                                                    <td>@item.MaVe</td>
+                                                    <td>@item.SoLuong</td>
+                                                    <td>@item.TongTien</td>
+
+
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Row -->
+        </div>
+        <!-- end container -->
+    </section>
+    <!-- ========== section end ========== -->
+    <!-- ======== main-wrapper end =========== -->
+
+
+    <script>
+
+        // ====== calendar activation
+        document.addEventListener("DOMContentLoaded", function () {
+            var calendarMiniEl = document.getElementById("calendar-mini");
+            var calendarMini = new FullCalendar.Calendar(calendarMiniEl, {
+                initialView: "dayGridMonth",
+                headerToolbar: {
+                    end: "today prev,next",
+                },
+            });
+            calendarMini.render();
+        });
+
+
+    </script>
+
+
+
+
+</body>

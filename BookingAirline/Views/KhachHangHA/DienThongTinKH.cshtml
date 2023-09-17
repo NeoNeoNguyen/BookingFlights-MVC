@@ -1,0 +1,191 @@
+﻿﻿@model BookingAirline.Models.Cart
+@using BookingAirline.Models
+@{
+    ViewBag.Title = "DienThongTinKH";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutPage2.cshtml";
+    var ttkh = (KhachHang)Session["userKH"];
+}
+
+
+<!----======== CSS ======== -->
+<link rel="stylesheet" href="~/Style/Css/InfoCustomers.css">
+
+<!----===== Iconscout CSS ===== -->
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+<!--<title>Responsive Regisration Form </title>-->
+
+
+<div class="container_infcustomer">
+    <header>CUSTOMER INFOMATION</header>
+
+    <form action="~/KhachHangHA/DienThongTinKH/" method="post">
+        <div>
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Full Name</label>
+                            <input type="text" name="name" value="@ttkh.TenKH" placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Date of Birth</label>
+                            <input type="date" name="birth" value="@ttkh.NgaySinh" placeholder="Enter birth date" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="text" name="email" value="@ttkh.Email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Mobile Number</label>
+                            <input type="number" name="number" value="@ttkh.SDT" placeholder="Enter mobile number" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Gender</label>
+                            <select required name="GioiTinh" class="form-control">
+                                <option disabled selected value="@ttkh.GioiTinh">@ttkh.GioiTinh</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Others</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label>CCCD</label>
+                            <input type="text" name="cccd_0" value="@ttkh.CCCD" placeholder="Enter your CCCD" required>
+                        </div>
+                    </div>
+                    @*<button type="submit" class="nextBtn">
+                <span class="btnText">Payment</span>
+                <i class="uil uil-navigator"></i>
+            </button>*@
+                </div>
+                <hr />
+                @{
+                    var stt = 0;
+                    var check = Session["trip"].ToString();
+                    var slkh = 0;
+                    if (check == "round" || check== "one-way")
+                    {
+                        slkh = (int)Session["SLKH"];
+                    }
+                    foreach (var item01 in Model.Items)
+                    {
+
+                        stt++;
+                        if (stt < slkh)
+                        {
+                            <div class="details ID" id="@item01.idVe.MaVe">
+                                <span class="title">Book Tickets For Relatives for Perseron @stt </span>
+
+                                <div class="fields">
+                                    <div class="input-field">
+                                        <label>Full Name</label>
+                                        <input type="text" placeholder="Enter ID type">
+                                    </div>
+
+                                    <div class="input-field">
+                                        <label>Date of Birth</label>
+                                        <input type="date" placeholder="Enter birth date">
+                                    </div>
+
+                                    <div class="input-field">
+                                        <label>Email</label>
+                                        <input type="text" placeholder="Enter your email">
+                                    </div>
+
+                                    <div class="input-field">
+                                        <label>Mobile Number</label>
+                                        <input type="number" placeholder="Enter mobile number">
+                                    </div>
+
+                                    <div class="input-field">
+                                        <label>Gender</label>
+                                        <select>
+                                            <option disabled selected>Select gender</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-field">
+                                        <label>CCCD</label>
+                                        <input type="text" placeholder="Enter your CCCD" name="cccd_@stt">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <hr />
+                        }
+
+                    }
+                    <button class="nextBtn">
+                        <span class="btnText">Payment</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                }
+
+            </div>
+        </div>
+
+       
+    </form>
+</div>
+
+<!--<script src="script.js"></script>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="~/Style/Js/jquery-1.11.2.min.js"><\/script>')</script>
+
+<script src="~/Style/Js/bootstrap.min.js"></script>
+
+<script src="~/Style/Js/datepicker.js"></script>
+<script src="~/Style/Js/plugins.js"></script>
+<script src="~/Style/Js/main.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        // navigation click actions
+        $('.scroll-link').on('click', function (event) {
+            event.preventDefault();
+            var sectionID = $(this).attr("data-id");
+            scrollToID('#' + sectionID, 750);
+        });
+        // scroll to top action
+        $('.scroll-top').on('click', function (event) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+        // mobile nav toggle
+        $('#nav-toggle').on('click', function (event) {
+            event.preventDefault();
+            $('#main-nav').toggleClass("open");
+        });
+    });
+    // scroll function
+    function scrollToID(id, speed) {
+        var offSet = 0;
+        var targetOffset = $(id).offset().top - offSet;
+        var mainNav = $('#main-nav');
+        $('html,body').animate({ scrollTop: targetOffset }, speed);
+        if (mainNav.hasClass("open")) {
+            mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+            mainNav.removeClass("open");
+        }
+    }
+    if (typeof console === "undefined") {
+        console = {
+            log: function () { }
+        };
+    }
+</script>

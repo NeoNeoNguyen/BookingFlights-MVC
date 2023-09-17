@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "FailePayment";
+    Layout = "~/Views/KhachHang/Shared/_LayoutPagePaymentStatus.cshtml";
+    var thongbao = TempData["Message"];
+}
+
+<link href="~/Content/CSS_01/style.css" rel="stylesheet" />
+<link href="~/Content/CSS_01/orange.css" rel="stylesheet" />
+<link href="~/Style/Css/thankyou.css" rel="stylesheet" />
+<section class="innerpage-wrapper">
+    <div id="thank-you" class="innerpage-section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="text-align:center">
+                    <h1 style="font-weight:bold;color:red">PAYMENT FAILE </h1>
+                </div>
+                <div class="col-sm-4">
+                    <img src="~/Content/images/Payment Error.gif" width="500" />
+                </div>
+                <div class="col-sm-6">
+                    <div style="width:auto;background-color:blue;height:10px;margin-bottom:5px"></div>
+                    <h2 style="font-weight:bold">
+                        Flight tickets cannot be booked.
+                    </h2>
+                    <h2>Please check again credit card!</h2>
+                    <h2>@thongbao</h2>
+                    <div>
+                        <a class="btn btn-warning" href="/KhachHangHA/ThanhToan">Try again</a>
+                        <a class="btn btn-danger" href="/KhachHangHA/PayCancel">Cancel </a>
+                    </div>
+
+                </div>
+                <div class="col-lg-12" style="text-align:center">
+                    <h2>
+                        If you still cannot pay, you can contact us via this email: avx@gmail.com
+                    </h2>
+                </div>
+            </div>
+        </div>
+</section>
+<!-- Content Wrapper. Contains page content -->

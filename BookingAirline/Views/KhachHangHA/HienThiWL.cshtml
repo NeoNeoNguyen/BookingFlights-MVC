@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BookingAirline.Models.Wishlist>
+@using BookingAirline.Models;
+
+@{ ViewBag.Title = "HienThiWL";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutInfoCustomer.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    ViewBag.active4 = "active"; }
+
+<div class="col-xs-12 col-sm-10 col-md-10 dashboard-content booking-trips">
+    <h2 class="dash-content-title">Wish List</h2>
+    <div class="dashboard-listing booking-listing">
+        <div class="dash-listing-heading">
+            <div class="custom-radio">
+                <input type="radio" id="radio01" name="radio" checked=checked />
+                <label for="radio01"><span></span>FLIGHT</label>
+            </div>
+        </div>
+        @using (Html.BeginForm("TimVe", "KhachHangHA", FormMethod.Post, new { @class = "d-flex" }))
+        {
+<input class="form-control me-2 " name="MaCB" type="text" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success">Search</button>}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var MaCB = db.ChuyenBays.Where(s => s.MaCB == item.MaCB).FirstOrDefault();
+                        var MaTBay = db.TuyenBays.Where(s => s.MaTBay == MaCB.MaTBay).FirstOrDefault();
+        <tr>
+            <td class="dash-list-icon booking-list-date"><div class="b-date"><h3>@Html.DisplayFor(modelItem => item.MaWL)</h3></div></td>
+            <td class="dash-list-text booking-list-detail">
+                <a href="~/KhachHangHA/ReturnVe/@item.MaCB" style="text-decoration:none">
+                    <h3>Mã Chuyến Bay:  @Html.DisplayFor(modelItem => item.MaCB)</h3>
+                </a>
+
+                <ul class="list-unstyled booking-info">
+                    <li><span>Date:</span>@MaCB.NgayGio</li>
+                    <li><span>Client:</span>  @Html.DisplayFor(modelItem => item.MaKH)<span class="line"></span></li>
+                    <li><span>Location </span> @MaTBay.SanBayDen | @MaTBay.SanBayDi</li>
+                    <li><span>Time:</span> @MaCB.NgayGio</li>
+                </ul>
+            </td>
+            @{ if (item.MaCBVe != null)
+                {
+<td class="dash-list-text booking-list-detail">
+    @{ var MaCBVe = db.ChuyenBays.Where(s => s.MaCB == item.MaCBVe).FirstOrDefault();
+        var MaTBayVe = db.TuyenBays.Where(s => s.MaTBay == MaCBVe.MaTBay).FirstOrDefault(); }
+    <a href="~/KhachHangHA/ReturnVe/@item.MaCB" style="text-decoration:none">
+        <h3>Mã Chuyến Bay Về:  @Html.DisplayFor(modelItem => item.MaCBVe)</h3>
+    </a>
+
+    <ul class="list-unstyled booking-info">
+        <li><span>Date:</span>@MaCBVe.NgayGio</li>
+        <li><span>Client:</span>  @Html.DisplayFor(modelItem => item.MaKH)<span class="line"></span></li>
+        <li><span>Location </span> @MaTBay.SanBayDen | @MaTBay.SanBayDi</li>
+        <li><span>Time:</span> @MaCB.NgayGio</li>
+    </ul>
+</td> }
+                else
+                {
+<td></td> } }
+
+            <td class="dash-list-btn">
+                @Html.ActionLink("Delete", "XoaWL", new { id = item.MaCB }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>}
+                </tbody>
+            </table>
+        </div><!-- end table-responsive -->
+    </div><!-- end booking-listings -->
+
+</div>

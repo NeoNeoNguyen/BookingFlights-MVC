@@ -1,0 +1,52 @@
+﻿﻿@model BookingAirline.Models.TuyenBay
+@{
+    ViewBag.Title = "DetailFR";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+}
+
+
+<div class="row" style="margin-right:-15px;margin-left:-15px">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="border-bottom: 1px solid #eee">Forms edit flight route @Model.MaTBay</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- Form chỉnh sửa thông tin chuyến bay -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default" style="border-color:#ddd">
+            <div class="panel-heading" style="color: #333; background-color: #f5f5f5; border-color: #ddd ">
+                Basic Form Elements
+            </div>
+            <div class="container">
+                <form action="~/NhanVien/DetailFR" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            @Html.HiddenFor(model => model.MaTBay)
+                            <div class="row ">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">Mã sân bay đi: </label>
+                                    <input class="form-control " name="MaSB" type="text" required value="@Model.MaTBay">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">Sân bay đi: </label>
+                                    <input class="form-control" name="SanBayDi" type="text" required value="@Model.SanBayDi">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label">Sân bay đến: </label>
+                                    <input class="form-control" name="SanBayDen" type="text" required value="@Model.SanBayDen">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div><input type="submit" value="Lưu chi tiết tuyến bay @Model.MaTBay này" class="btn btn-primary" /></div>
+                            <div>@Html.ActionLink("Quay lại danh chuyến bay", "FlightRoute")</div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

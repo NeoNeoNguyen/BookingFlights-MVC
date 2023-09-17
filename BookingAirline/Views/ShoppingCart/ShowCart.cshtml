@@ -1,0 +1,54 @@
+﻿@model BookingAirline.Models.Cart
+
+@{
+    ViewBag.Title = "ShowCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CART</h2>
+
+<a href="@Url.Action("Index","Product")">Other Ticket</a>
+
+@if (Model != null) 
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Ticket</th>
+                <th>Airline</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach(var item in Model.Items)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item._product.MaCB)</td>
+                    @*<td><img src="@Url.Content(item._product.IMG)" height="50" width="50"/></td>*@
+                    @*<td>@Html.DisplayFor(model => item._product.GiaVe)</td>*@
+                    <td>
+                        @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
+                        {
+                            <input type="hidden" value="@item._product.MaCB" name="IDTicket" />
+                            <input type="number" value="@item._quantity" name="CartQuantity" />
+                            <input type="submit" value="Update" />
+                        }
+                    </td>
+                    <td>
+                        @*<a href="/ShoppingCart/RemoveCart/@item._product.MaVe">Delete</a>*@               
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            @*<tr>
+                <td colspan="6" style="text-align:right">Total: @Model.Total_money()</td>
+            </tr>*@
+        </tfoot>
+    </table>
+}
+

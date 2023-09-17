@@ -1,0 +1,45 @@
+﻿@model BookingAirline.Models.KhachHang
+
+@using BookingAirline.Models;
+@{
+    ViewBag.Title = "ThongtinCaNhan";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutInfoCustomer.cshtml";
+    ViewBag.active2 = "active";
+}
+<style>
+    img {
+        border-radius: 50%;
+    }
+</style>
+
+<div class="col-xs-12 col-sm-10 col-md-10 dashboard-content user-profile">
+    <h2 class="dash-content-title">My Profile</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Profile Details</h4></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-5 col-md-4 user-img">
+                    <img src="@Model.HinhAnh" class="img-responsive" alt="user-img" style="width:350px" />
+                </div><!-- end columns -->
+                <div class="col-sm-7 col-md-8  user-detail">
+                    <ul class="list-unstyled">
+                        <li><span>Name:</span> @Model.TenKH</li>
+                        <li><span>Date of Birth:</span> @Model.NgaySinh</li>
+                        <li><span>Email:</span> @Model.Email</li>
+                        <li><span>Phone:</span> @Model.SDT</li>
+                        <li><span>Citizen ID:</span> @Model.CCCD</li>
+                        <li><span>Gender:</span> @Model.GioiTinh</li>
+                    </ul>
+                    <a class="btn" href="~/KhachHangHA/EditProfile/@Model.IDKH" data-target="#edit-profile">Edit Profile</a>
+                    <a class="btn" href="~/LoginUser/ResetPass">Reset password?</a>
+                </div><!-- end columns -->
+                <div class="col-sm-12 user-desc">
+                    <h4>About You</h4>
+                    <p>Vestibulum tristique, justo eu sollicitudin sagittis, metus dolor eleifend urna, quis scelerisque purus quam nec ligula. Suspendisse iaculis odio odio, ac vehicula nisi faucibus eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse posuere semper sem ac aliquet. Duis vel bibendum tellus, eu hendrerit sapien. Proin fringilla, enim vel lobortis viverra, augue orci fringilla diam, sed cursus elit mi vel lacus. Nulla facilisi. Fusce sagittis, magna non vehicula gravida, ante arcu pulvinar arcu, aliquet luctus arcu purus sit amet sem. Mauris blandit odio sed nisi porttitor egestas. Mauris in quam interdum purus vehicula rutrum quis in sem. Integer interdum lectus at nulla dictum luctus. Sed risus felis, posuere id condimentum non, egestas pulvinar enim. Praesent pretium risus eget nisi ullamcorper fermentum. Duis lacinia nisi ac rhoncus vestibulum.</p>
+
+                </div><!-- end columns -->
+            </div><!-- end row -->
+
+        </div><!-- end panel-body -->
+    </div><!-- end panel-detault -->
+</div>

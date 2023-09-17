@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <link href="~/Style/Css/Admin/footerStyle.css" rel="stylesheet" />
+    <link rel="apple-touch-icon" href="~/Style/apple-touch-icon.html">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/Css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/Style/Css/fontAwesome.css">
+    <link rel="stylesheet" href="~/Style/Css/hero-slider.css">
+    <link rel="stylesheet" href="~/Style/Css/owl-carousel.css">
+    <link rel="stylesheet" href="~/Style/Css/datepicker.css">
+    <link rel="stylesheet" href="~/Style/Css/tooplate-style.css">
+    <link rel="Shortcut Icon" href="~/hinh/logo-i.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Style/Css/myStyle.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <script src="~/Style/Js/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- Bootstrap Stylesheet -->
+    <link href="~/Content/CSS_01/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome Stylesheet -->
+    <link href="~/Content/CSS_01/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom Stylesheets -->
+    <link href="~/Content/CSS_01/style.css" rel="stylesheet" />
+    <link href="~/Content/CSS_01/orange.css" rel="stylesheet" />
+    <link href="~/Content/CSS_01/responsive.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="~/Style/Js/jquery-3.2.1.min.js"></script>
+    <style>
+        .avatar {
+            width: 50px; /* Điều chỉnh kích thước avatar tùy ý */
+            height: 50px;
+            border-radius: 50%; /* Đây là thuộc tính tạo góc bo tròn */
+            overflow: hidden; /* Loại bỏ phần dư của hình ảnh vượt ra khỏi vùng giới hạn */
+        }
+    </style>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="opacity:80%;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Home","Home",new {area = ""}, new {@class = "navbar-brand"})*@
+            </div>
+            <div class="navbar-collapse collapse" style="font-size:16px;">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "TrangChu", "KhachHangHA")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @{var user = (BookingAirline.Models.KhachHang)HttpContext.Current.Session["userKH"]; }
+
+                    <li>
+                        <div class="avatar">
+                            <img src="@user.HinhAnh" alt="Avatar">
+                        </div>
+
+                    </li>
+                    <li>
+                        <a href="~/KhachHangHA/ThongTinKH">
+
+                            @user.UserName
+                        </a>
+                    </li>
+                    <li><a href="@Url.Action("LogOut","LoginUser")">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="innerpage-wrapper">
+        <div id="dashboard" class="innerpage-section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="dashboard-heading">
+                            <h2>Travel <span>Profile</span></h2>
+                            <p>
+                                Hi  @{var khachHang = (BookingAirline.Models.KhachHang)HttpContext.Current.Session["userKH"];}
+                                @user.UserName, Welcome to FLIGHT Travels!
+                            </p>
+                            <p>All your trips booked with us will appear here and you'll be able to manage everything!</p>
+                        </div><!-- end dashboard-heading -->
+
+                        <div class="dashboard-wrapper">
+                            <div class="row">
+
+                                <div class="col-xs-12 col-sm-2 col-md-2 dashboard-nav">
+                                    <ul class="nav nav-tabs nav-stacked text-center">
+                                        <li class="@ViewBag.active1"><a href="~/KhachHangHA/ThongTinKH"><span><i class="fa fa-cogs"></i></span>Dashboard</a></li>
+                                        <li class="@ViewBag.active2"><a href="~/KhachHangHA/ThongtinCaNhan"><span><i class="fa fa-user"></i></span>Profile</a></li>
+                                        <li class="@ViewBag.active3"><a href="~/KhachHangHA/Booking"><span><i class="fa fa-briefcase"></i></span>Invoice</a></li>
+                                        <li class="@ViewBag.active4"><a href="~/KhachHangHA/HienThiWL"><span><i class="fa fa-heart"></i></span>Wishlist</a></li>
+                                        <li class="@ViewBag.active5"><a href="~/KhachHangHA/MyCard"><span><i class="fa fa-credit-card"></i></span>My Cards</a></li>
+                                    </ul>
+                                </div><!-- end columns -->
+                                @RenderBody()
+                                <!-- end columns -->
+
+                            </div><!-- end row -->
+                        </div><!-- end dashboard-wrapper -->
+                    </div><!-- end columns -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end dashboard -->
+    </section>
+    @RenderSection("script", false)
+
+</body>
+
+</html>

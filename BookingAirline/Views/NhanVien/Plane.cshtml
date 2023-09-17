@@ -1,0 +1,57 @@
+﻿﻿
+@{
+    ViewBag.Title = "Plane";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Plane</h2>
+<div class="row">
+    <div class="col-md-2 mb-2">
+        <div class="btn btn-secondary text-white">
+            <a style="text-decoration:none;color:white" href="#">Add Airport </a>
+            <i class="fas fa-calendar me-2"></i>
+        </div>
+    </div>
+
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Flight
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                @*//Phần render*@
+                <tr>
+                    <th>Mã tuyến bay</th>
+                    <th>Mã sân bay</th>
+                    <th>Cảng hàng không </th>
+                    <th>Sân bay đi</th>
+                    <th>Sân bay đến</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>Chỉnh sửa || Xóa</td>
+                </tr>
+                <tr>
+                    <td>Garrett Winters</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>63</td>
+                    <td>2011/04/30</td>
+                    <td>Chỉnh sửa || Xóa</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

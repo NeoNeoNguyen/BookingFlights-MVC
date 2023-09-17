@@ -1,0 +1,353 @@
+﻿
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    /*background-image: url('../../hinh/beautiful-sight.jpg');*/
+    align-items: center;
+    justify-content: center;
+    background-color:#fff;
+}
+
+h2{
+    text-align:center;
+}
+
+.container_infcustomer {   
+    /*position: relative;*/
+    max-width: 900px;
+    width: 100%;
+    border-radius: 6px;
+    padding: 30px;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+    .container_infcustomer header {
+        position: relative;
+        font-size: 30px;
+        font-weight: 600;
+        color: #333;
+    }
+
+        .container_infcustomer header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 3px;
+            width: 27px;
+            border-radius: 8px;
+            background-color: #4070f4;
+        }
+
+    .container_infcustomer form {
+        position: relative;
+        margin-top: 16px;
+        min-height: 300px;
+        background-color: #fff;
+        overflow: hidden;
+    }
+
+        .container_infcustomer form .form {
+            /*position: absolute;*/
+            background-color: #fff;
+            transition: 0.3s ease;
+        }
+
+            .container_infcustomer form .form.second {
+                opacity: 0;
+                pointer-events: none;
+                transform: translateX(100%);
+            }
+
+form.secActive .form.second {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+form.secActive .form.first {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+}
+
+.container_infcustomer form .title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 6px 0;
+    color: #333;
+}
+
+.container_infcustomer form .fields {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+form .fields .input-field {
+    display: flex;
+    width: calc(100% / 3 - 15px);
+    flex-direction: column;
+    margin: 4px 0;
+}
+
+.input-field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+.input-field input, select {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+    margin: 8px 0;
+}
+
+    .input-field input :focus,
+    .input-field select:focus {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+    }
+
+    .input-field select,
+    .input-field input[type="date"] {
+        color: #707070;
+    }
+
+        .input-field input[type="date"]:valid {
+            color: #333;
+        }
+
+.container_infcustomer form button, .backBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    max-width: 200px;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #fff;
+    border-radius: 5px;
+    margin: 25px 0;
+    background-color: #4070f4;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+
+.container_infcustomer form .btnText {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+form button:hover {
+    background-color: #265df2;
+}
+
+form button i,
+form .backBtn i {
+    margin: 0 6px;
+}
+
+form .backBtn i {
+    transform: rotate(180deg);
+}
+
+form .buttons {
+    display: flex;
+    align-items: center;
+}
+
+    form .buttons button, .backBtn {
+        margin-right: 14px;
+    }
+
+@media (max-width: 750px) {
+    .container_infcustomer form {
+        overflow-y: scroll;
+    }
+
+        .container_infcustomer form::-webkit-scrollbar {
+            display: none;
+        }
+
+    form .fields .input-field {
+        width: calc(100% / 2 - 15px);
+    }
+}
+
+@media (max-width: 550px) {
+    form .fields .input-field {
+        width: 100%;
+    }
+}
+
+-----------------------------------------Payment-------------------------------------------------*/
+.fields_2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.container_infcustomer form .fields_2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+form .fields_2 .input-field-2 {
+    display: flex;
+    width: calc(100% / 4 - 15px);
+    flex-direction: column;
+    margin: 4px 0;
+}
+
+
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700&display=swap");
+
+.ticket {
+    border: 2px solid #b1154a;
+    margin: 0 auto;
+    width: 600px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.qr_code {
+    padding: 20px;
+    width: 30%;
+    position: relative;
+}
+
+    .qr_code img {
+        width: 115px;
+        height: 115px;
+        display: block;
+    }
+
+    .qr_code::before,
+    .qr_code::after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        right: -25px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%
+    }
+
+    .qr_code::before {
+        top: -30px
+    }
+
+    .qr_code::after {
+        bottom: -30px
+    }
+
+.content {
+    width: 70%;
+    background-color: #fff;
+    padding: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around
+}
+
+    .content .location {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        text-align: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center
+    }
+
+        .content .location h1 {
+            text-transform: uppercase;
+            color: #252525;
+            margin-bottom: 5px
+        }
+
+        .content .location p {
+            font-size: 10px;
+            color: #8a878a
+        }
+
+        .content .location .path ion-icon {
+            color: #f18053;
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+            font-size: 54px;
+            font-weight: 900
+        }
+
+    .content .info {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between
+    }
+
+        .content .info h4 {
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-size: 12px
+        }
+
+        .content .info p {
+            color: #8a878a;
+            font-size: 10px
+        }

@@ -1,0 +1,180 @@
+﻿
+*:before,
+*:after {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+
+html,
+body {
+    background: $bg-blue;
+    min-height: 100vh;
+    font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.feedback {
+    position: absolute;
+    opacity: 0;
+}
+
+.table {
+    display: table;
+    width: 40%;
+    position: absolute;
+    height: 100%;
+}
+
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+#ticket {
+    width: 350px;
+    background: #fff;
+    height: 510px;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+}
+    &:after;{
+    content: "";
+    display: block;
+    position: relative;
+    clear: both;
+}
+
+
+#ticket > .row:first-child {
+    &:before, &:after
+
+{
+    background-color: $bg-blue;
+    position: absolute;
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    bottom: 0;
+    margin-bottom: -10px;
+}
+
+&:before {
+    left: 0;
+    margin-left: -10px;
+}
+
+&:after {
+    right: 0;
+    margin-right: -10px;
+}
+
+}
+
+.logo {
+    width: 100px;
+}
+
+.row {
+    position: relative;
+    padding: 20px;
+    &.perforated
+
+{
+    border-bottom: 1px dashed #ddd;
+}
+
+&.destinations:after,
+&.normRow:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+}
+
+.label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.2 !important;
+}
+
+.airport {
+    font-size: 32px;
+}
+
+.city {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.right {
+    float: right;
+    text-align: right;
+}
+
+.left {
+    float: left;
+    text-align: left;
+}
+
+svg#plane {
+    width: 30px;
+    position: absolute;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: 15px;
+    opacity: 0.5;
+    display: inline-block;
+}
+
+.smalltext {
+    padding: 20px;
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+.col6 {
+    float: left;
+    width: 50%;
+    font-size: 21px;
+    line-height: 1.5;
+}
+
+.col {
+    font-size: 21px;
+}
+
+.normRow {
+    padding-bottom: 0;
+}
+
+#qr {
+    float: right;
+    width: 80px;
+    position: relative;
+    right: -5px;
+    bottom: 5px;
+    margin-left: 10px;
+}
+
+.sparkler {
+    width: 70px;
+    height: 70px;
+    float: left;
+    margin-right: 20px;
+}
+    .square
+    {
+    width: 12.5%;
+    height: 12.5%;
+    background-color: grey;
+    float: left;
+    transition: background-color 0.1s;
+}
+
+

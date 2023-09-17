@@ -1,0 +1,96 @@
+
+@model BookingAirline.Models.KhachHang
+
+@using BookingAirline.Models;
+
+@{
+    ViewBag.Title = "CustomerManagement";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities database = new BookingAirLightEntities();
+    ViewBag.active12 = "active";
+}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="jquery-3.6.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    var makh = (string)TempData["makhachhang"];
+    if (checkmess == "SuaKH")
+    {
+        <script>
+            swal({
+                title: "Đã sửa thông tin khách hàng thành công",
+                text: "Khách hàng @makh đã được sửa đổi mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+}
+<h2>CustomerManagement</h2>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">
+        <a href="~/NhanVien/TrangChu" style="text-decoration: none; color: #6c757d">
+            Dashboard
+        </a>
+    </li>
+    <li class="breadcrumb-item active">Customer Management</li>
+</ol>
+
+<div class="col-sm-2">
+    <a class="btn btn-success btn-sm print-file" title="In" onclick="myApp.printTable()" style="margin: 0 0 8px -15px">
+        <i class="fas fa-print"></i> In dữ liệu
+    </a>
+</div>
+<div class="col-sm-">
+    <a class="btn-blue" href="~/LoginUser/ResetPass">
+        <i class="fa fa-unlock-alt" aria-hidden="true"></i>Reset customer's password
+    </a>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Customer
+    </div>
+    <div class="card-body table-responsive">
+        <table id="datatablesSimple">
+            <thead>
+                @*//Phần render*@
+                <tr>
+                    <th>UserName</th>
+                    <th>Tên</th>
+                    <th>Ngày sinh</th>
+                    <th>SĐT</th>
+                    <th>Email</th>
+                    <th>Chức năng</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                @{ var ttkh = database.KhachHangs.ToList();
+                    foreach (var item in ttkh)
+                    {
+                        <tr>
+                            <td>@item.UserName</td>
+                            <td>@item.TenKH</td>
+                            <td>@item.NgaySinh</td>
+                            <td>@item.SDT</td>
+                            <td>@item.Email</td>
+                            <td>
+                                <a href="~/NhanVien/DetailCus/@item.IDKH" class="btn btn-info btn-sm edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                            
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

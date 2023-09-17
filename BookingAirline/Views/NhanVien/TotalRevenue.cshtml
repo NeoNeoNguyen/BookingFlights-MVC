@@ -1,0 +1,76 @@
+﻿﻿@model IEnumerable<BookingAirline.Models.HoaDon>
+@using BookingAirline.Models;
+@{
+    ViewBag.Title = "TotalRevenue";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    ViewBag.active8 = "active";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+}
+
+    
+    <h2>TotalRevenue</h2>
+    <br />
+    <div class="col-sm-2">
+        <a class="btn btn-success btn-sm print-file" title="In" onclick="myApp.printTable()">
+            <i class="fas fa-print"></i> In dữ liệu
+        </a>
+    </div>
+    <br />
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Total Revenue
+        </div>
+        <div class="card-body table-responsive">
+            <table id="datatablesSimple">
+                <thead>
+                    @*//Phần render*@
+                    <tr>
+                        <th>Mã hóa đơn</th>
+                        <th>Mã khách hàng</th>
+                        <th>Tình trạng</th>
+                        <th>Ngày lập</th>
+                        <th>Thành tiền</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item01 in Model)
+                        {
+                            <tr>
+                                <td>@item01.MaHD</td>
+                                <td>@item01.IDKH</td>
+                                <td>@item01.TinhTrang</td>
+                                <td>@item01.NgayLap</td>
+                                @{ 
+                                    var total1 = string.Format("{0:0,0 vnđ}", item01.ThanhTien);
+                                }
+                                <td>@total1</td>
+                                <td id="hidden">
+                                    <a href="~/NhanVien/DetailTotalRevenue/@item01.MaHD" class="btn btn-info btn-sm edit">
+                                        <i style="height:20px" class="fa fa-info"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @section script{
+        <script>
+            //In dữ liệu
+            var myApp = new function () {
+                this.printTable = function () {
+                    var tab = document.getElementById('datatablesSimple');
+                    var win = window.open('', '', 'height=800px,width=1200px');
+                    win.document.write(tab.outerHTML);
+                    win.document.close();
+                    win.print();
+                }
+            }
+
+    </script>
+} 

@@ -1,0 +1,161 @@
+﻿@model IEnumerable<BookingAirline.Models.NhanVien>
+@using BookingAirline.Models
+@{ ViewBag.Title = "Staff";
+    Layout = "~/Views/NhanVien/Shared/_LayoutPage1.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities(); }
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="jquery-3.6.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<br />
+@{ var checkmess = (string)TempData["messageAlert"];
+    var manv = (string)TempData["manhanvien"];
+    if (checkmess == "SuaNV")
+    {
+<script>
+    swal({
+        title: "Đã sửa thông tin nhân viên thành công",
+        text: "Thông tin hân viên đã được sửa đổi",
+        icon: "success",
+        button: "OK",
+    });
+</script>
+ }
+else if (checkmess == "themthanhcong")
+{
+<script>
+    swal({
+        title: "Đã thêm nhân viên thành công",
+        text: "Nhân viên đã được thêm mới",
+        icon: "success",
+        button: "OK",
+    });
+</script>
+ }
+else if (checkmess == "XoaThanhCong")
+{
+<script>
+    swal({
+        title: "Đã xóa nhân viên thành công",
+        text: "Nhân viên đã được xóa",
+        icon: "success",
+        button: "OK",
+    });
+</script>
+ }; }
+
+<h2>Staff Management</h2>
+<div class="btn btn-secondary text-white">
+
+    <a style="text-decoration:none;color:white;" href="~/NhanVien/CreateStaff">Add</a>
+
+</div>
+<br />
+<div class="col-sm-">
+    <a class="btn-blue" href="~/LoginUser/ResetPass">
+        <i class="fa fa-unlock-alt" aria-hidden="true"></i>Reset customer's password
+    </a>
+</div>
+
+<br />
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Flight
+    </div>
+    <table id="datatablesSimple">
+        <thead>
+            @*//Phần render*@
+            <tr>
+                <th>ID</th>
+                <th>Full name</th>
+                <th>User name</th>
+                <th>Password</th>
+                <th>Email</th>
+                <th>Chức năng</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{ var nv = (NhanVien)Session["userNV"];
+
+                var dsstaff = db.NhanViens.ToList();
+                foreach (var item01 in dsstaff)
+                {
+                    if (nv.IDNV != item01.IDNV)
+                    {
+    <tr>
+        <td>@item01.IDNV</td>
+        <td>@item01.TenNV</td>
+        <td>@item01.UserName </td>
+        <td>@item01.Password</td>
+        <td>@item01.Email_NV</td>
+        <td>
+            <a href="~/NhanVien/DetailStaff/@item01.IDNV" class="btn btn-info btn-sm edit">
+                <i class="fa fa-edit"></i>
+            </a>
+            <button value="@item01.IDNV" id="IDNV" data-toggle="modal" data-target="#myModal03" class="btn btn-danger btn-sm edit">
+                <i class="fa fa-remove"></i>
+            </button>
+        </td>
+    </tr>
+ }
+
+} }
+        </tbody>
+    </table>
+</div>
+<div class="modal" id="myModal03" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure? You want to delete this voucher</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Cancle</a>
+                <a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Confirm</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('datatablesSimple');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+
+        function ConfirmDelete() {
+            var IDNV = $('#IDNV').val();
+            $.ajax({
+                type: "POST",
+                url: "/NhanVien/DeleteStaff/" + IDNV,
+                success: function (res) {
+                    if (res.success == true) {
+                        window.location.reload();
+                    }
+                    else {
+
+                    }
+                }
+            })
+        }
+    </script>
+
+}

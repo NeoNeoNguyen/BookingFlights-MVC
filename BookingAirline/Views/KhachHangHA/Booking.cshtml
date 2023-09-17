@@ -1,0 +1,170 @@
+﻿@model IEnumerable<BookingAirline.Models.HoaDon>
+@using BookingAirline.Models
+@using System.Globalization
+@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutInfoCustomer.cshtml";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    ViewBag.active3 = "active";
+    var stt = 0;
+}
+
+@{
+    var checkmess = (string)TempData["messageAlert"];
+    var macb = (string)TempData["machuyenbay"];
+    if (checkmess == "success")
+    {
+        <script>
+            swal({
+                title: "Đã thêm chuyến bay thành công",
+                text: "Mã chuyến bay  @macb đã được thêm mới",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "HoanVeS")
+    {
+        <script>
+            swal({
+                title: "Đã hoàn vé thành công",
+                text: "Mã hóa đơn  @TempData["mahd"] đã được hoàn tiền thành công! ",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+    }
+    else if (checkmess == "error")
+    {
+        <script>
+            swal({
+                title: "Hoàn vé không thành công",
+                text: "Mã hóa đơn: @TempData["mahd"] không thể hoàn tiền !",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+    };
+}
+
+
+
+
+<div class="col-xs-12 col-sm-10 col-md-10 dashboard-content booking-trips">
+    <h2 class="dash-content-title">Trips You have Booked!</h2>
+    <div class="dashboard-listing booking-listing">
+        <div class="dash-listing-heading">
+            <div class="custom-radio">
+                <input type="radio" id="radio01" name="radio" checked />
+                <label for="radio01"><span></span>FLIGHT</label>
+            </div><!-- end custom-radio -->
+            <!--<div class="custom-radio">
+                <input type="radio" id="radio02" name="radio" />
+                <label for="radio02"><span></span>Hotels</label>
+            </div>-->
+            <!-- end custom-radio -->
+            <!--<div class="custom-radio">
+                <input type="radio" id="radio03" name="radio" />
+                <label for="radio03"><span></span>Flights</label>
+            </div>-->
+            <!-- end custom-radio -->
+            <!--<div class="custom-radio">
+                <input type="radio" id="radio04" name="radio" />
+                <label for="radio04"><span></span>Cars</label>
+            </div>-->
+            <!-- end custom-radio -->
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        stt++;
+                        <tr>
+                            <td class="dash-list-icon booking-list-date"><div class="b-date"><h3>@stt</h3></div></td>
+                            <td class="dash-list-text booking-list-detail">
+                                <h3>CODE BOOKING: @item.MaHD</h3>
+                                <ul class="list-unstyled booking-info">
+                                    <li><span>Booking Date:</span> @item.NgayLap</li>
+                                    @{ var email = db.KhachHangs.Where(s => s.IDKH == item.IDKH).FirstOrDefault();}
+                                    <li><span>Client:</span> @item.IDKH<span class="line">|</span> @email.Email<span class="line">|</span></li>
+                                    @{
+                                        var total = string.Format("{0:0,0 vnđ}", item.ThanhTien);
+                                        var slve = db.ChiTietHDs.Where(s => s.MaHD == item.MaHD).Count();
+                                    }
+
+                                    <li><span>Total quantity: </span>  @slve (1 Adult | 1 Child)</li>
+                                    <li><span>Total bill:</span> @total</li>
+                                </ul>
+                                <button type="button" id="Refund" class="btn btn-info btn-lg" data-target="@item.MaHD">Refund</button>
+                            </td>
+                            <td class="dash-list-btn"><a href="~/KhachHangHA/DetailBooking/@item.MaHD" class="btn btn-success">DETAILS</a></td>
+                        </tr>
+                        if (stt == 6)
+                        {
+                            break;
+                        };
+                    }
+
+                </tbody>
+            </table>
+        </div><!-- end table-responsive -->
+    </div><!-- end booking-listings -->
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Refund Confirmation!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="info_confirm">Are you sure you want a refund with this order.</p>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="confirm" class="btn btn-warning">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $('.btn-info').click(function () {
+            var target = $(this).data("target");
+            $('#myModal').modal('show');
+            var html = 'Are you sure you want a refund with this order ' + target + ' !';
+            $('#info_confirm').html(html);
+            $('#confirm').attr("data-target", target);
+        });
+
+        $('#confirm').click(function () {
+            var target = $('#confirm').data("target");
+            console.log(target);
+            $.ajax({
+                type: "POST",
+                url: "/KhachHangHA/RefundTicket/" + target,
+                success: function (res) {
+                    if (res.success == true) {
+                        swal("Successful ticket refund")
+                            .then((value) => {
+                                window.location.reload()
+                            });
+                    }
+                    else {
+
+                    }
+                }
+            })
+        });
+    </script>
+
+}

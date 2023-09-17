@@ -1,0 +1,83 @@
+﻿@using BookingAirline.Models;
+@{
+    ViewBag.Title = "Thông tin khách hàng";
+    Layout = "~/Views/KhachHangHA/Shared/_LayoutInfoCustomer.cshtml";
+    ViewBag.active1 = "active";
+    BookingAirLightEntities db = new BookingAirLightEntities();
+    var user = (BookingAirline.Models.KhachHang)Session["userKH"];
+    var dshd = db.HoaDons.Where(s => s.IDKH == user.IDKH).ToList();
+    var stt = 0;
+}
+
+<!--===== INNERPAGE-WRAPPER ====-->
+
+<div class="col-xs-12 col-sm-10 col-md-10 dashboard-content">
+    <h2 class="dash-content-title">Total Traveled</h2>
+    <div class="row info-stat">
+
+        <div class="col-sm-6 col-md-3">
+            <div class="stat-block">
+                <span><i class="fa fa-tachometer"></i></span>
+                <h3>1548</h3>
+                <p>Miles</p>
+            </div><!-- end stat-block -->
+        </div><!-- end columns -->
+
+        <div class="col-sm-6 col-md-3">
+            <div class="stat-block">
+                <span><i class="fa fa-globe"></i></span>
+                <h3>12%</h3>
+                <p>World</p>
+            </div><!-- end stat-block -->
+        </div><!-- end columns -->
+
+        <div class="col-sm-6 col-md-3">
+            <div class="stat-block">
+                <span><i class="fa fa-building"></i></span>
+                <h3>312</h3>
+                <p>Cities</p>
+            </div><!-- end stat-block -->
+        </div><!-- end columns -->
+
+        <div class="col-sm-6 col-md-3">
+            <div class="stat-block">
+                <span><i class="fa fa-paper-plane"></i></span>
+                <h3>102</h3>
+                <p>Trips</p>
+            </div><!-- end stat-block -->
+        </div><!-- end columns -->
+    </div><!-- end row -->
+
+    <div class="dashboard-listing invoices">
+        <h3 class="dash-listing-heading">Invoices</h3>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                    @{
+                        foreach (var item in dshd)
+                        {
+                            stt++;
+                            <tr>
+                                <td class="dash-list-icon invoice-icon"><i class="fa fa-bars"></i></td>
+                                <td class="dash-list-text invoice-text">
+                                    <h4 class="invoice-title">Professional Plan</h4>
+                                    <ul class="list-unstyled list-inline invoice-info">
+                                        <li class="invoice-status red">Pay: @item.TinhTrang</li>
+                                        <li class="invoice-order"> Order: #@item.MaHD</li>
+                                        <li class="invoice-date"> Date: @item.NgayLap</li>
+                                    </ul>
+                                </td>
+                                <td class="dash-list-btn"><a class="btn btn-orange"href="~/KhachHangHA/DetailBooking/@item.MaHD">View Invoice</a></td>
+                            </tr>
+                            if(stt >= 6)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div><!-- end table-responsive -->
+    </div><!-- end invoices -->
+</div>
+<!-- end innerpage-wrapper -->

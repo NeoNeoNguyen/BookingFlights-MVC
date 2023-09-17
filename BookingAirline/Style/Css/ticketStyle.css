@@ -1,0 +1,41 @@
+﻿
+.margin-des {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.container {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.box-pro {
+    border-color: red;
+    border: 1px solid;
+    border-top: hidden;
+}
+
+.card {
+    box-shadow: #808080;
+    border-radius: 5px;
+    border: 3px solid #395B64;
+    background-color: #EFEFEF;
+}
+
+.btn-buy {
+    margin-right: 20px;
+    margin-top: 10px;
+    float: right;
+    height: 30px;
+    width: 50px;
+    background-color: #006E7F;
+    border: solid #395B64;
+    border-radius: 5px;
+}
+
+.a-buy{
+    border:solid none;
+    color:#fff;
+    text-align:center;
+}

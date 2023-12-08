@@ -216,13 +216,13 @@
         <h3>Login Here</h3>
 
         <label for="username">Username</label>
-        <input type="text" class="form-control" name="user" placeholder="Username" required />
+        <input type="text" class="form-control" name="user" placeholder="Username" required id="username"/>
 
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" placeholder="Password" required />
+        <input type="password" class="form-control" name="password" placeholder="Password" required id="password"/>
 
         <p class="text-danger">@TempData["error"]</p>
-        <button type="submit">Login</button>
+        <button type="submit" id="button">Login</button>
         <div class="social">
             <div class="go"><i class="fa fa-google" aria-hidden="true"></i>  Google</div>
             <div class="fb"><i class="fa fa-facebook" aria-hidden="true"></i>  Facebook</div>

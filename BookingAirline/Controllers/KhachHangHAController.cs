@@ -725,8 +725,8 @@ namespace BookingAirline.Controllers
         public ActionResult TimVe(string MaCB)
         {
             var KH = (BookingAirline.Models.KhachHang)Session["userKH"];
-            var ds = database.Wishlists.Where(s => s.MaKH == KH.IDKH && s.MaCB.Contains(MaCB)).ToList();
-            return View("HienThiWL", ds);
+            //var ds = database.Wishlists.Where(s => s.MaKH == KH.IDKH && s.MaCB.Contains(MaCB)).ToList();
+            return View("HienThiWL");
         }
 
         public ActionResult XoaWL(string id)

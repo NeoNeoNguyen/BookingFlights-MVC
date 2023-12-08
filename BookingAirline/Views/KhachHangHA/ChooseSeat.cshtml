@@ -26,7 +26,7 @@
     <div class="title-de" style="margin-left: 590px">
         <h2 style="text-align:center">ChooseSeat : @macb</h2>
     </div>
-    <div style="line-height:82px; margin-left:15px">
+    @*<div style="line-height:82px; margin-left:15px">
         @{ var KH = (BookingAirline.Models.KhachHang)Session["userKH"];
                         var WL = database.Wishlists.Where(s => s.MaCB == macb && s.MaKH == KH.IDKH).FirstOrDefault();
                         if (WL != null)
@@ -39,7 +39,7 @@
             <button style="border:none;background-color:white;" id="macb" value=@macb>
                 <i class="fa fa-heart" id="like" aria-hidden="true" style="font-size:29px; color:gray"></i>
             </button> } }
-    </div>
+    </div>*@
 </div>
 
 <link href="~/Style/Css/style.css" rel="stylesheet" />
